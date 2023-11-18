@@ -1,5 +1,5 @@
 CMakeFiles/waterRendering.dir/common/shader.cpp.o: \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/code/common/shader.cpp \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/common/shader.cpp \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -179,6 +179,6 @@ CMakeFiles/waterRendering.dir/common/shader.cpp.o: \
  /usr/include/c++/11/pstl/execution_defs.h /usr/include/c++/11/sstream \
  /usr/include/c++/11/bits/sstream.tcc /usr/include/c++/11/stdlib.h \
  /usr/include/string.h /usr/include/strings.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/code/external/glew-1.13.0/include/GL/glew.h \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glew-1.13.0/include/GL/glew.h \
  /usr/include/GL/glu.h /usr/include/GL/gl.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/code/common/shader.hpp
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/common/shader.hpp

@@ -1,5 +1,5 @@
 external/glfw-3.1.2/examples/CMakeFiles/boing.dir/boing.c.o: \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/code/external/glfw-3.1.2/examples/boing.c \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/examples/boing.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -55,11 +55,11 @@ external/glfw-3.1.2/examples/CMakeFiles/boing.dir/boing.c.o: \
  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/code/external/glfw-3.1.2/include/GLFW/glfw3.h \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/code/external/glfw-3.1.2/deps/GL/glext.h \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
  /usr/include/inttypes.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/code/external/glfw-3.1.2/deps/linmath.h
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/deps/linmath.h
