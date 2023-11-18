@@ -25,21 +25,44 @@ public:
     int w;
     int h;
 
+    int xyz; // plane orientation: 0 for x = 0, 1 for y = 0, 2 for z = 0
+
     glm::vec3 center = glm::vec3(0.0,0.0,0.0); // default value
 
     glm::vec3 bottom_right, bottom_left, top_right, top_left;
 
     Plane() {}
-    Plane( double wi , double he , int nw, int nh) {
+    Plane(double wi , double he , int nw, int nh, glm::vec3 center, int x_y_z) {
         width = wi;
         height = he;
         h = nw;
         w = nh;
 
-        bottom_left = glm::vec3(center[0]-width/2, center[1], center[2]+height/2);
-        bottom_right = glm::vec3(center[0]+width/2, center[1], center[2]+height/2);
-        top_right = glm::vec3(center[0]+width/2, center[1], center[2]-height/2);
-        top_left = glm::vec3(center[0]-width/2, center[1], center[2]-height/2);
+        xyz = x_y_z;
+
+        if(xyz == 0){ // x = 0
+        
+            std::cout << "x=0" << std::endl;
+            bottom_left = glm::vec3(center[0], center[1]-height/2, center[2]+width/2);
+            bottom_right = glm::vec3(center[0], center[1-height/2], center[2]-width/2);
+            top_right = glm::vec3(center[0], center[1]+height/2, center[2]+width/2);
+            top_left = glm::vec3(center[0], center[1]+height/2, center[2]-width/2);
+
+        }else if(xyz == 1){ // y = 0
+            std::cout << "y=0" << std::endl;
+            bottom_left = glm::vec3(center[0]-width/2, center[1], center[2]+height/2);
+            bottom_right = glm::vec3(center[0]+width/2, center[1], center[2]+height/2);
+            top_right = glm::vec3(center[0]+width/2, center[1], center[2]-height/2);
+            top_left = glm::vec3(center[0]-width/2, center[1], center[2]-height/2);
+
+        }else{ // z = 0
+            std::cout << "z=0" << std::endl;
+            bottom_left = glm::vec3(center[0]-width/2, center[1]-height/2, center[2]);
+            bottom_right = glm::vec3(center[0]+width/2, center[1]-height/2, center[2]);
+            top_right = glm::vec3(center[0]+width/2, center[1]+height/2, center[2]);
+            top_left = glm::vec3(center[0]-width/2, center[1]+height/2, center[2]);
+        }
+
     }
 
     void setDimension(int nw, int nh){
@@ -47,33 +70,59 @@ public:
         w = nh;
     }
 
-    void addRelief(){
-        for(int i = 0; i < indexed_vertices.size(); i++){
-
-            double f = (double)rand() / RAND_MAX;
-            double rand_d = -0.2 + f * (0.2 - (-0.2));
-
-            indexed_vertices[i][1] += rand_d;
-        }
-    }
-
     void generatePlane(){
-
-        glm::vec3 start_corner = glm::vec3(center[0]-width/2.0, center[1], center[2]-height/2.0);
 
         double step_1 = width/(double)w;
         double step_2 = height/(double)h;
 
+
         glm::vec3 current_corner;
 
-        // fill indexed_vertices
-        for(int i = 0; i <= h; i++) {
-            for (int j = 0; j <= w; j++) {
-                current_corner = glm::vec3(start_corner[0] + i*step_1, start_corner[1], start_corner[2] + j*step_2);
-                glm::vec3 normal = glm::vec3(0.0, 1.0, 0.0);
-                coord_texture.push_back(glm::vec2(current_corner[0]/width, 1.0-current_corner[2]/height));
-                indexed_vertices.push_back(current_corner);
-                normals.push_back(normal);
+
+        if(xyz == 0){ // x = 0
+
+            glm::vec3 start_corner = bottom_left;
+
+            // fill indexed_vertices
+            for(int i = 0; i <= h; i++) {
+                for (int j = 0; j <= w; j++) {
+                    current_corner = glm::vec3(start_corner[0], start_corner[1] + j*step_2, start_corner[2] + i*step_1);
+                    glm::vec3 normal = glm::vec3(1.0, 0.0, 0.0); // todo adapt for cube
+                    coord_texture.push_back(glm::vec2(1.0-current_corner[1]/height, current_corner[2]/width)); // todo check
+                    indexed_vertices.push_back(current_corner);
+                    normals.push_back(normal);
+                }
+            }
+
+
+        }else if(xyz == 1){ // y = 0
+
+            glm::vec3 start_corner = top_left;
+
+            // fill indexed_vertices
+            for(int i = 0; i <= h; i++) {
+                for (int j = 0; j <= w; j++) {
+                    current_corner = glm::vec3(start_corner[0] + i*step_1, start_corner[1], start_corner[2] + j*step_2);
+                    glm::vec3 normal = glm::vec3(0.0, 1.0, 0.0); // todo adapt for cube
+                    coord_texture.push_back(glm::vec2(current_corner[0]/width, 1.0-current_corner[2]/height));
+                    indexed_vertices.push_back(current_corner);
+                    normals.push_back(normal);
+                }
+            }
+
+        }else if(xyz == 2){ // z = 0
+            
+            glm::vec3 start_corner = bottom_left;
+
+            // fill indexed_vertices
+            for(int i = 0; i <= h; i++) {
+                for (int j = 0; j <= w; j++) {
+                    current_corner = glm::vec3(start_corner[0] + i*step_1, start_corner[1] + j*step_2, start_corner[2]);
+                    glm::vec3 normal = glm::vec3(0.0, 0.0, 1.0); // todo adapt for cube
+                    coord_texture.push_back(glm::vec2(current_corner[0]/width, 1.0-current_corner[1]/height)); // todo check
+                    indexed_vertices.push_back(current_corner);
+                    normals.push_back(normal);
+                }
             }
         }
 

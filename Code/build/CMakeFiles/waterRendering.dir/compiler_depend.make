@@ -1382,14 +1382,8 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
   ../waterRendering/Texture.h \
   ../waterRendering/image_ppm.h \
   ../waterRendering/Camera.h \
-  ../waterRendering/MeshObject.h \
-  ../waterRendering/SceneGraph.h \
-  ../waterRendering/Transform.h \
-  ../waterRendering/SolarSystem.h \
-  ../waterRendering/Sphere.h
+  ../waterRendering/MeshObject.h
 
-
-../waterRendering/SolarSystem.h:
 
 ../waterRendering/MeshObject.h:
 
@@ -1503,8 +1497,6 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
 
-../waterRendering/Transform.h:
-
 /usr/include/errno.h:
 
 /usr/include/c++/11/cstdio:
@@ -1550,8 +1542,6 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
 /usr/include/c++/11/tr1/poly_laguerre.tcc:
 
 /usr/include/c++/11/bits/stl_iterator_base_types.h:
-
-../waterRendering/SceneGraph.h:
 
 /usr/include/c++/11/cstdlib:
 
@@ -2094,8 +2084,6 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
 /usr/include/c++/11/bits/vector.tcc:
 
 /usr/include/stdio.h:
-
-../waterRendering/Sphere.h:
 
 /usr/include/c++/11/typeinfo:
 

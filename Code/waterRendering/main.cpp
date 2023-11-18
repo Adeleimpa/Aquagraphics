@@ -31,10 +31,6 @@ using namespace glm;
 #include "Camera.h"
 #include "SceneObject.h"
 #include "MeshObject.h"
-#include "SceneGraph.h"
-#include "Transform.h"
-#include "SolarSystem.h"
-#include "Sphere.h"
 
 GLFWwindow* window;
 
@@ -67,7 +63,9 @@ float angle = 0.;
 float zoom = 1.;
 
 // plane to put the aquarium on top of it
-Plane *plane = new Plane(3.0, 3.0, 10, 10);
+Plane *planeX = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,0.0,0.0), 0); // plane in x=0
+Plane *planeY = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,0.0,0.0), 1); // plane in y=0
+Plane *planeZ = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,0.0,0.0), 2); // plane in z=0
 
 
 GLuint programID;
@@ -147,11 +145,23 @@ int main( void )
     // PLANE
     // ------------------------------------------------------------------------------------
     // generate plane -> fill arrays of indices, triangles and indexed_vertices
-    plane->generatePlane();
-    plane->generateBuffers();
+    planeX->generatePlane();
+    planeX->generateBuffers();
 
-    plane->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
-    scene_objects.push_back(plane);
+    planeX->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
+    scene_objects.push_back(planeX);
+
+    planeY->generatePlane();
+    planeY->generateBuffers();
+
+    planeY->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
+    scene_objects.push_back(planeY);
+
+    planeZ->generatePlane();
+    planeZ->generateBuffers();
+
+    planeZ->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
+    scene_objects.push_back(planeZ);
     // ------------------------------------------------------------------------------------
 
 

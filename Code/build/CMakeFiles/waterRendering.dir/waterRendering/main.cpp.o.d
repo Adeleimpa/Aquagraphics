@@ -283,8 +283,4 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: \
  /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/Texture.h \
  /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/image_ppm.h \
  /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/Camera.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/MeshObject.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/SceneGraph.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/Transform.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/SolarSystem.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/Sphere.h
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/waterRendering/MeshObject.h

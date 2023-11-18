@@ -14,18 +14,8 @@ public:
     glm::vec3 m_center;
     float m_radius;
 
-    bool isFlying = false;
-    float weight = 10;
-    glm::vec3 velocity;
-    glm::vec3 acceleration;
-
     // default resolution
     unsigned int resolution = 30;
-
-    // resolutions depending on distance from camera
-    const unsigned int back_resolution = 10;
-    const unsigned int middle_resolution = 20;
-    const unsigned int front_resolution = 40;
 
     std::vector<std::vector<unsigned short> > indices_Res= std::vector<std::vector<unsigned short> >(3);
     std::vector<std::vector<std::vector<unsigned short> > > triangles_Res =  std::vector<std::vector<std::vector<unsigned short> > >(3);
@@ -42,64 +32,6 @@ public:
         std::cout << "resolution =" << resolution << std::endl;
     }
 
-    void build_arrays_for_resolutions(){
-
-        int currentReso;
-
-        for(int i = 0; i < 3; i++){
-
-            if(i==0){currentReso = back_resolution;}
-            else if(i==1){currentReso = middle_resolution;}
-            else if(i==2){currentReso = front_resolution;}
-
-            indexed_vertices_Res[i].resize(currentReso * currentReso);
-            normals_Res[i].resize(currentReso * currentReso);
-            coord_texture_Res[i].resize(currentReso * currentReso);
-            for (unsigned int thetaIt = 0; thetaIt < currentReso; ++thetaIt) {
-                float u = (float) (thetaIt) / (float) (currentReso - 1);
-                float theta = u * 2 * M_PI;
-                for (unsigned int phiIt = 0; phiIt < currentReso; ++phiIt) {
-                    unsigned int vertexIndex = thetaIt + phiIt * currentReso;
-                    float v = (float) (phiIt) / (float) (currentReso - 1);
-                    float phi = -M_PI / 2.0 + v * M_PI;
-                    glm::vec3 xyz = SphericalCoordinatesToEuclidean(theta, phi);
-                    indexed_vertices_Res[i][vertexIndex] = m_center + m_radius * xyz;
-                    normals_Res[i][vertexIndex] = xyz;
-                    coord_texture_Res[i][vertexIndex][0] = u;
-                    coord_texture_Res[i][vertexIndex][1] = v;
-                }
-            }
-            triangles_Res[i].clear();
-            for (unsigned int thetaIt = 0; thetaIt < currentReso - 1; ++thetaIt) {
-                for (unsigned int phiIt = 0; phiIt < currentReso - 1; ++phiIt) {
-                    unsigned short vertexuv = thetaIt + phiIt * currentReso;
-                    unsigned short vertexUv = thetaIt + 1 + phiIt * currentReso;
-                    unsigned short vertexuV = thetaIt + (phiIt + 1) * currentReso;
-                    unsigned short vertexUV = thetaIt + 1 + (phiIt + 1) * currentReso;
-
-                    indices_Res[i].push_back(vertexuv);
-                    indices_Res[i].push_back(vertexUv);
-                    indices_Res[i].push_back(vertexUV);
-
-                    indices_Res[i].push_back(vertexuv);
-                    indices_Res[i].push_back(vertexUV);
-                    indices_Res[i].push_back(vertexuV);
-
-                    std::vector<unsigned short> t1, t2;
-                    t1.push_back(vertexuv);
-                    t1.push_back(vertexUv);
-                    t1.push_back(vertexUV);
-
-                    t2.push_back(vertexuv);
-                    t2.push_back(vertexUV);
-                    t2.push_back(vertexuV);
-
-                    triangles_Res[i].push_back(t1);
-                    triangles_Res[i].push_back(t2);
-                }
-            }
-        }
-    }
 
     void build_arrays() {
         indexed_vertices.resize(resolution * resolution);
@@ -150,27 +82,9 @@ public:
         }
     }
 
-    void switchResolution(int resolution_index){
-        indices = indices_Res[resolution_index];
-        triangles = triangles_Res[resolution_index];
-        indexed_vertices = indexed_vertices_Res[resolution_index];
-        coord_texture = coord_texture_Res[resolution_index];
-        normals = normals_Res[resolution_index];
-    }
 
     glm::vec3 SphericalCoordinatesToEuclidean( float theta , float phi ) {
         return glm::vec3( cos(theta) * cos(phi) , sin(theta) * cos(phi) , sin(phi) );
-    }
-
-    void fly(double delta_time){
-
-        acceleration = glm::vec3(0,-GRAVITY,0);
-        velocity += glm::vec3(acceleration[0]*delta_time, acceleration[1]*delta_time, acceleration[2]*delta_time);
-
-        transformations[0][0] += velocity[0]*delta_time;
-        transformations[0][1] += velocity[1]*delta_time;
-        m_center[0] += velocity[0]*delta_time;
-        m_center[1] += velocity[1]*delta_time;
     }
 };
 
