@@ -31,6 +31,7 @@ using namespace glm;
 #include "Camera.h"
 #include "SceneObject.h"
 #include "MeshObject.h"
+#include "Cube.h"
 
 GLFWwindow* window;
 
@@ -63,9 +64,11 @@ float angle = 0.;
 float zoom = 1.;
 
 // plane to put the aquarium on top of it
-Plane *planeX = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,0.0,0.0), 0); // plane in x=0
-Plane *planeY = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,0.0,0.0), 1); // plane in y=0
-Plane *planeZ = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,0.0,0.0), 2); // plane in z=0
+Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane in y=0
+
+// water
+Cube *water = new Cube(2.0, 10,  glm::vec3(0.0,0.0,0.0));
+
 
 
 GLuint programID;
@@ -145,23 +148,25 @@ int main( void )
     // PLANE
     // ------------------------------------------------------------------------------------
     // generate plane -> fill arrays of indices, triangles and indexed_vertices
-    planeX->generatePlane();
-    planeX->generateBuffers();
+    plane->generatePlane();
+    plane->generateBuffers();
 
-    planeX->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
-    scene_objects.push_back(planeX);
+    plane->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
+    scene_objects.push_back(plane);
+    // ------------------------------------------------------------------------------------
 
-    planeY->generatePlane();
-    planeY->generateBuffers();
 
-    planeY->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
-    scene_objects.push_back(planeY);
-
-    planeZ->generatePlane();
-    planeZ->generateBuffers();
-
-    planeZ->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
-    scene_objects.push_back(planeZ);
+    // ------------------------------------------------------------------------------------
+    // WATER
+    // ------------------------------------------------------------------------------------
+    water->setCubeColor(glm::vec4(0.0, 0.0, 0.9, 0.0));
+    water->generatePlanes();
+    scene_objects.push_back(water->top);
+    scene_objects.push_back(water->floor);
+    scene_objects.push_back(water->left);
+    scene_objects.push_back(water->right);
+    scene_objects.push_back(water->front);
+    scene_objects.push_back(water->back);
     // ------------------------------------------------------------------------------------
 
 

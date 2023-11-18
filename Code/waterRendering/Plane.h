@@ -19,15 +19,15 @@ private:
 
 public:
 
-    double width;
-    double height;
+    double width = 1.;
+    double height = 1.;
 
-    int w;
-    int h;
+    int w = 1;
+    int h = 1;
 
     int xyz; // plane orientation: 0 for x = 0, 1 for y = 0, 2 for z = 0
 
-    glm::vec3 center = glm::vec3(0.0,0.0,0.0); // default value
+    glm::vec3 center = glm::vec3(0.0,0.0,0.0); 
 
     glm::vec3 bottom_right, bottom_left, top_right, top_left;
 

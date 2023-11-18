@@ -56,6 +56,7 @@ public:
         // Index buffer
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
+        //glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
         glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
         glEnableClientState(GL_VERTEX_ARRAY) ;
