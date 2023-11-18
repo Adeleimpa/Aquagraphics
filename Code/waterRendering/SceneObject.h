@@ -23,8 +23,6 @@ public:
 
     GLuint vertexbuffer, elementbuffer, buffer_coord_txt;
 
-    int isTerrain = 0; // 0 is not a terrain, 1 is a terrain
-
     glm::vec4 color = glm::vec4(0.0,0.0,0.0,0.0); // default value
 
     // transformations
@@ -32,10 +30,6 @@ public:
     std::vector<int> index_transf; // 0 for scaling, 1 for translation, 2 for rotation
 
     SceneObject() {}
-
-    void setIsTerrain(int isTerrain){
-        this->isTerrain = isTerrain;
-    }
 
     void setColor(glm::vec4 color){
         this->color = color;
@@ -45,7 +39,6 @@ public:
     void draw(GLuint programID) const {
         if( triangles.size() == 0 ) return;
 
-        glUniform1i(glGetUniformLocation(programID, "isTerrain"), isTerrain);
         glUniform4f(glGetUniformLocation(programID, "mesh_color"), color[0], color[1], color[2], color[3]);
 
         // 1rst attribute buffer : vertices
@@ -63,11 +56,7 @@ public:
         // Index buffer
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
-        if(isTerrain == 0){
-            glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
-        }else{
-            glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-        }
+        glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
         glEnableClientState(GL_VERTEX_ARRAY) ;
         glEnableClientState (GL_NORMAL_ARRAY);

@@ -31,7 +31,7 @@ public:
         // update MVP matrix
         camera->sendMVPtoShader(programID);
 
-        if(obj->isTerrain==1){ // terrain
+        /*if(obj->isTerrain==1){ // terrain
             // send textures to shader
             grass_texture->sendTextureToShader(programID, "texture_grass", 0);
             rock_texture->sendTextureToShader(programID, "texture_rock", 1);
@@ -39,7 +39,7 @@ public:
             snow_texture->sendTextureToShader(programID, "texture_snow", 3);
         }else{
             sun_texture->sendTextureToShader(programID, "texture_sun", 4);
-        }
+        }*/
 
         obj->loadBuffers();
         obj->draw(programID);
