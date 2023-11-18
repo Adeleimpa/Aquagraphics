@@ -32,6 +32,7 @@ using namespace glm;
 #include "SceneObject.h"
 #include "MeshObject.h"
 #include "Cube.h"
+#include "Aquarium.h"
 
 GLFWwindow* window;
 
@@ -68,6 +69,9 @@ Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane
 
 // water
 Cube *water = new Cube(2.0, 10,  glm::vec3(0.0,0.0,0.0));
+
+// aquarium
+Aquarium *aquarium = new Aquarium(2.0, 10,  glm::vec3(0.0,0.0,0.0));
 
 
 
@@ -159,7 +163,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     // WATER
     // ------------------------------------------------------------------------------------
-    water->setCubeColor(glm::vec4(0.0, 0.0, 0.9, 0.0));
+    water->setCubeColor(glm::vec4(0.67, 0.84, 0.9, 0.0));
     water->generatePlanes();
     scene_objects.push_back(water->top);
     scene_objects.push_back(water->floor);
@@ -167,6 +171,17 @@ int main( void )
     scene_objects.push_back(water->right);
     scene_objects.push_back(water->front);
     scene_objects.push_back(water->back);
+    // ------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------
+    // AQUARIUM
+    // ------------------------------------------------------------------------------------
+    aquarium->setAquariumColor(glm::vec4(0.94, 0.94, 0.94, 0.0));
+    aquarium->generatePlanes();
+    scene_objects.push_back(aquarium->floor);
+    scene_objects.push_back(aquarium->left);
+    scene_objects.push_back(aquarium->right);
+    scene_objects.push_back(aquarium->back);
     // ------------------------------------------------------------------------------------
 
 

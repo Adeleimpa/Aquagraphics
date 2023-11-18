@@ -67,7 +67,7 @@ public:
         top->setColor(color);
         floor->setColor(color);
         left->setColor(color);
-        back->setColor(color);
+        right->setColor(color);
         front->setColor(color);
         back->setColor(color);
     }

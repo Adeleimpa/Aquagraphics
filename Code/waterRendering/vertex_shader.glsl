@@ -15,9 +15,6 @@ mat4 transformation_matrix;
 out vec2 coord_txt;
 layout(location = 2) in vec2 coord;
 
-// heightmap
-out float height;
-
 
 void main(){
 
@@ -28,6 +25,5 @@ void main(){
 
         coord_txt = coord; // texture
 
-        height = vertices_position_modelspace.y;
 }
 
