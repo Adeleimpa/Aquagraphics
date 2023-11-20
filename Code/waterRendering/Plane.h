@@ -41,22 +41,21 @@ public:
         xyz = x_y_z;
 
         if(xyz == 0){ // x = 0
-        
-            std::cout << "x=0" << std::endl;
+            //std::cout << "x=0" << std::endl;
             bottom_left = glm::vec3(center[0], center[1]-height/2, center[2]+width/2);
             bottom_right = glm::vec3(center[0], center[1-height/2], center[2]-width/2);
             top_right = glm::vec3(center[0], center[1]+height/2, center[2]+width/2);
             top_left = glm::vec3(center[0], center[1]+height/2, center[2]-width/2);
 
         }else if(xyz == 1){ // y = 0
-            std::cout << "y=0" << std::endl;
+            //std::cout << "y=0" << std::endl;
             bottom_left = glm::vec3(center[0]-width/2, center[1], center[2]+height/2);
             bottom_right = glm::vec3(center[0]+width/2, center[1], center[2]+height/2);
             top_right = glm::vec3(center[0]+width/2, center[1], center[2]-height/2);
             top_left = glm::vec3(center[0]-width/2, center[1], center[2]-height/2);
 
         }else{ // z = 0
-            std::cout << "z=0" << std::endl;
+            //std::cout << "z=0" << std::endl;
             bottom_left = glm::vec3(center[0]-width/2, center[1]-height/2, center[2]);
             bottom_right = glm::vec3(center[0]+width/2, center[1]-height/2, center[2]);
             top_right = glm::vec3(center[0]+width/2, center[1]+height/2, center[2]);
@@ -78,12 +77,11 @@ public:
 
         glm::vec3 current_corner;
 
-
+        // fill indexed_vertices
         if(xyz == 0){ // x = 0
 
             glm::vec3 start_corner = bottom_left;
 
-            // fill indexed_vertices
             for(int i = 0; i <= h; i++) {
                 for (int j = 0; j <= w; j++) {
                     current_corner = glm::vec3(start_corner[0], start_corner[1] + j*step_2, start_corner[2] + i*step_1);
@@ -99,7 +97,6 @@ public:
 
             glm::vec3 start_corner = top_left;
 
-            // fill indexed_vertices
             for(int i = 0; i <= h; i++) {
                 for (int j = 0; j <= w; j++) {
                     current_corner = glm::vec3(start_corner[0] + i*step_1, start_corner[1], start_corner[2] + j*step_2);
@@ -114,7 +111,6 @@ public:
             
             glm::vec3 start_corner = bottom_left;
 
-            // fill indexed_vertices
             for(int i = 0; i <= h; i++) {
                 for (int j = 0; j <= w; j++) {
                     current_corner = glm::vec3(start_corner[0] + i*step_1, start_corner[1] + j*step_2, start_corner[2]);
