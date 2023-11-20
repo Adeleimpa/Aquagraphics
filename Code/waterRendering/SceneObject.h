@@ -8,6 +8,8 @@
 #include <iostream>
 #include <glm/glm.hpp>
 
+#include "Material.h"
+
 
 class SceneObject {
 
@@ -25,6 +27,8 @@ public:
 
     glm::vec4 color = glm::vec4(0.0,0.0,0.0,0.0); // default value
 
+    Material material;
+
     // transformations
     std::vector<glm::vec3> transformations;
     std::vector<int> index_transf; // 0 for scaling, 1 for translation, 2 for rotation
@@ -41,6 +45,7 @@ public:
 
         glUniform4f(glGetUniformLocation(programID, "mesh_color"), color[0], color[1], color[2], color[3]);
 
+
         // 1rst attribute buffer : vertices
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -56,8 +61,8 @@ public:
         // Index buffer
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
-        //glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
-        glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+        glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+        //glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
         glEnableClientState(GL_VERTEX_ARRAY) ;
         glEnableClientState (GL_NORMAL_ARRAY);

@@ -15,6 +15,8 @@ mat4 transformation_matrix;
 out vec2 coord_txt;
 layout(location = 2) in vec2 coord;
 
+// send normals to fragment shader
+
 
 void main(){
 

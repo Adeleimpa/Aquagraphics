@@ -33,6 +33,7 @@ using namespace glm;
 #include "MeshObject.h"
 #include "Cube.h"
 #include "Aquarium.h"
+#include "Light.h"
 
 GLFWwindow* window;
 
@@ -63,6 +64,13 @@ std::vector<SceneObject*> scene_objects;
 //rotation
 float angle = 0.;
 float zoom = 1.;
+
+// light
+glm::vec3 light_I_a = glm::vec3(0.5f, 0.5f,  0.5f);
+glm::vec3 light_I_d = glm::vec3(0.5f, 0.5f,  0.5f);
+glm::vec3 light_I_s = glm::vec3(0.5f, 0.5f,  0.5f);
+glm::vec3 light_pos = camera_position;
+Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos);
 
 // plane to put the aquarium on top of it
 Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane in y=0
@@ -152,10 +160,11 @@ int main( void )
     // PLANE
     // ------------------------------------------------------------------------------------
     // generate plane -> fill arrays of indices, triangles and indexed_vertices
-    plane->generatePlane();
+    plane->generatePlane(1.0);
     plane->generateBuffers();
 
     plane->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
+    plane->setMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
     scene_objects.push_back(plane);
     // ------------------------------------------------------------------------------------
 
@@ -165,6 +174,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     water->setCubeColor(glm::vec4(0.67, 0.84, 0.9, 0.0));
     water->generatePlanes();
+    water->setCubeMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
     scene_objects.push_back(water->top);
     scene_objects.push_back(water->floor);
     scene_objects.push_back(water->left);
@@ -178,6 +188,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     aquarium->setAquariumColor(glm::vec4(0.94, 0.94, 0.94, 0.0));
     aquarium->generatePlanes();
+    aquarium->setAquariumMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
     scene_objects.push_back(aquarium->floor);
     scene_objects.push_back(aquarium->left);
     scene_objects.push_back(aquarium->right);

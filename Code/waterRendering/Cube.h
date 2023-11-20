@@ -1,5 +1,5 @@
 //
-// Created by Adèle Imparato on 16/03/2023.
+// Created by Adèle Imparato on 18/11/2023.
 //
 
 #ifndef CUBE_H
@@ -49,17 +49,17 @@ public:
 
     void generatePlanes(){
         // GENERATE PLANES AND BUFFERS
-        top->generatePlane();
+        top->generatePlane(1.0);
         top->generateBuffers();
-        floor->generatePlane();
+        floor->generatePlane(-1.0);
         floor->generateBuffers();
-        left->generatePlane();
+        left->generatePlane(-1.0);
         left->generateBuffers();
-        right->generatePlane();
+        right->generatePlane(1.0);
         right->generateBuffers();
-        front->generatePlane();
+        front->generatePlane(1.0);
         front->generateBuffers();
-        back->generatePlane();
+        back->generatePlane(-1.0);
         back->generateBuffers();
     }
 
@@ -70,6 +70,15 @@ public:
         right->setColor(color);
         front->setColor(color);
         back->setColor(color);
+    }
+
+    void setCubeMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s){
+        top->setMaterial(a, d, s);
+        floor->setMaterial(a, d, s);
+        left->setMaterial(a, d, s);
+        right->setMaterial(a, d, s);
+        front->setMaterial(a, d, s);
+        back->setMaterial(a, d, s);
     }
 
 };
