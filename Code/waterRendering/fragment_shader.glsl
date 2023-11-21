@@ -28,24 +28,22 @@ in vec3 FragPos;
 void main(){
 
         // light calculations
-        float ambientStrength = 0.8;
-        vec3 ambient = ambientStrength * lightColor;
+        vec3 ambient = I_a * k_a;
 
         vec3 norm = normalize(fragNormal);
         vec3 lightDir = normalize(lightPos - FragPos); 
 
         float diff = max(dot(norm, lightDir), 0.0);
-        vec3 diffuse = diff * lightColor;
+        vec3 diffuse = diff * I_d * k_d;
 
-        float specularStrength = 0.5;
         vec3 viewDir = normalize(viewPos - FragPos);
         vec3 reflectDir = reflect(-lightDir, norm);
         float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-        vec3 specular = specularStrength * spec * lightColor;  
+        vec3 specular = I_s * spec * k_s;
 
-        //vec3 result = ambient * objectColor;
+        vec3 result = ambient * objectColor;
         //vec3 result = (ambient + diffuse) * objectColor;
-        vec3 result = (ambient + diffuse + specular) * objectColor;
+        //vec3 result = (ambient + diffuse + specular) * objectColor;
 
 
         //gl_FragColor = vec4(objectColor, 1.0); // simple color

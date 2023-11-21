@@ -164,7 +164,7 @@ int main( void )
     plane->generateBuffers();
 
     plane->setColor(glm::vec3(0.5, 0.27, 0.11));
-    plane->setMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
+    plane->setPlaneMaterial(glm::vec3(0.8, 0.8, 0.8), glm::vec3(0.7, 0.7, 0.7), glm::vec3(0.8, 0.8, 0.8));
     scene_objects.push_back(plane);
     // ------------------------------------------------------------------------------------
 
@@ -174,8 +174,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     water->setCubeColor(glm::vec3(0.67, 0.84, 0.9));
     water->generatePlanes();
-    //water->setCubeMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
-    water->setMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
+    water->setCubeMaterial(glm::vec3(0.8, 0.8, 0.8), glm::vec3(0.7, 0.7, 0.7), glm::vec3(0.8, 0.8, 0.8));
     scene_objects.push_back(water->top);
     scene_objects.push_back(water->floor);
     scene_objects.push_back(water->left);
@@ -189,8 +188,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     aquarium->setAquariumColor(glm::vec3(0.94, 0.94, 0.94));
     aquarium->generatePlanes();
-    //aquarium->setAquariumMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1))
-    aquarium->setMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
+    aquarium->setAquariumMaterial(glm::vec3(0.8, 0.8, 0.8), glm::vec3(0.7, 0.7, 0.7), glm::vec3(0.8, 0.8, 0.8));
     scene_objects.push_back(aquarium->floor);
     scene_objects.push_back(aquarium->left);
     scene_objects.push_back(aquarium->right);
