@@ -1378,14 +1378,18 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
   /usr/include/c++/11/math.h \
   ../waterRendering/Plane.h \
   ../waterRendering/SceneObject.h \
+  ../waterRendering/Material.h \
   ../waterRendering/GLTexture.h \
   ../waterRendering/Texture.h \
   ../waterRendering/image_ppm.h \
   ../waterRendering/Camera.h \
   ../waterRendering/MeshObject.h \
   ../waterRendering/Cube.h \
-  ../waterRendering/Aquarium.h
+  ../waterRendering/Aquarium.h \
+  ../waterRendering/Light.h
 
+
+../waterRendering/Light.h:
 
 ../waterRendering/Aquarium.h:
 
@@ -1644,6 +1648,8 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
 /usr/include/c++/11/bits/specfun.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+../waterRendering/Material.h:
 
 /usr/include/c++/11/cfloat:
 

@@ -41,9 +41,9 @@ void main(){
         float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
         vec3 specular = I_s * spec * k_s;
 
-        vec3 result = ambient * objectColor;
+        //vec3 result = ambient * objectColor;
         //vec3 result = (ambient + diffuse) * objectColor;
-        //vec3 result = (ambient + diffuse + specular) * objectColor;
+        vec3 result = (ambient + diffuse + specular) * objectColor;
 
 
         //gl_FragColor = vec4(objectColor, 1.0); // simple color
