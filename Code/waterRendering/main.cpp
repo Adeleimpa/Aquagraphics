@@ -155,7 +155,6 @@ int main( void )
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
 
-
     // ------------------------------------------------------------------------------------
     // PLANE
     // ------------------------------------------------------------------------------------
@@ -196,11 +195,6 @@ int main( void )
     // ------------------------------------------------------------------------------------
 
 
-    // Get a handle for our "LightPosition" uniform
-    glUseProgram(programID);
-    GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
-
-
     // For speed computation
     double lastTime = glfwGetTime();
     int nbFrames = 0;
@@ -216,6 +210,14 @@ int main( void )
 
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // light
+        glUniform3f(glGetUniformLocation(programID, "lightPos"), light_pos[0], light_pos[1], light_pos[2]);
+
+        // test jsp si ca aide
+        /*glBindAttribLocation(programID, 0, "vertices_position_modelspace");
+        glBindAttribLocation(programID, 1, "vertexNormal");
+        glBindAttribLocation(programID, 2, "coord");*/
 
         // Use our shader
         glUseProgram(programID);

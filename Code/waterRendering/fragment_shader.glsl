@@ -7,10 +7,15 @@
 in vec2 coord_txt;
 
 uniform vec4 mesh_color;
+uniform vec3 lightPos;
+
+in vec3 fragNormal; 
 
 void main(){
 
-        //color = vec3(0.0, 0.0, 1.0);
-        gl_FragColor = mesh_color;
+
+        // todo light calcul
+
+        gl_FragColor = mesh_color; // simple color
 
 }

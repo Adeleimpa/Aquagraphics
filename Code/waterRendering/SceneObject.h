@@ -23,7 +23,7 @@ public:
     std::vector<glm::vec2> coord_texture; // texture
     std::vector<glm::vec3> normals;
 
-    GLuint vertexbuffer, elementbuffer, buffer_coord_txt;
+    GLuint vertexbuffer, normalbuffer, elementbuffer, buffer_coord_txt;
 
     glm::vec4 color = glm::vec4(0.0,0.0,0.0,0.0); // default value
 
@@ -47,7 +47,7 @@ public:
 
 
         // 1rst attribute buffer : vertices
-        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(0); // layout (location = 0)
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
         glVertexAttribPointer(
                 0,                  // attribute
@@ -58,10 +58,23 @@ public:
                 (void*)0            // array buffer offset
         );
 
+        // 2nd attribute buffer: normals
+        glEnableVertexAttribArray(1); // layout (location = 1)
+        glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+        glVertexAttribPointer(
+            1,                  // attribute
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void*)0            // array buffer offset
+        );
+
         // Index buffer
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
-        glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+        // switch from one to another 
+        glPolygonMode (GL_FRONT_AND_BACK, GL_LINE); // displays meshs
         //glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
         glEnableClientState(GL_VERTEX_ARRAY) ;
@@ -71,11 +84,13 @@ public:
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, (void*)0);
 
         glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(2);
     }
 
     void generateBuffers(){
         glGenBuffers(1, &vertexbuffer);
+        glGenBuffers(1, &normalbuffer);
         glGenBuffers(1, &elementbuffer);
         glGenBuffers(1, &buffer_coord_txt);
     }
@@ -84,6 +99,10 @@ public:
         // Load data (vertices, meshes, etc.) into VBO's
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
         glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec3), &indexed_vertices[0], GL_STATIC_DRAW);
+
+        // Generate a buffer for the vertex normals
+        glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+        glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 
         // Generate a buffer for the indices
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
@@ -97,6 +116,7 @@ public:
 
     void deleteBuffers(){
         glDeleteBuffers(1, &vertexbuffer);
+        glDeleteBuffers(1, &normalbuffer);
         glDeleteBuffers(1, &elementbuffer);
         glDeleteBuffers(1, &buffer_coord_txt);
     }
