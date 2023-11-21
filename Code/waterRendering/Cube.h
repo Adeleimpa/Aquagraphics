@@ -72,14 +72,6 @@ public:
         back->setColor(color);
     }
 
-    void setCubeMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s){
-        top->setMaterial(a, d, s);
-        floor->setMaterial(a, d, s);
-        left->setMaterial(a, d, s);
-        right->setMaterial(a, d, s);
-        front->setMaterial(a, d, s);
-        back->setMaterial(a, d, s);
-    }
 
 };
 

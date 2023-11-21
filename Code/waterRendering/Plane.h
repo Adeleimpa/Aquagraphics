@@ -70,12 +70,6 @@ public:
         w = nh;
     }
 
-    void setMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s){
-        material.k_ambiant = a;
-        material.k_diffuse = d;
-        material.k_specular = s;
-    }
-
     // n_orient indicates the orientation of the normal, it can be +1.0 or -1.0
     void generatePlane(double n_orient){
 

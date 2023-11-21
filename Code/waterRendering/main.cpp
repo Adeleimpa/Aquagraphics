@@ -66,12 +66,12 @@ float angle = 0.;
 float zoom = 1.;
 
 // light
-glm::vec3 light_I_a = glm::vec3(0.5f, 0.5f,  0.5f);
-glm::vec3 light_I_d = glm::vec3(0.5f, 0.5f,  0.5f);
+glm::vec3 light_I_a = glm::vec3(0.7f, 0.7f, 0.7f);
+glm::vec3 light_I_d = glm::vec3(0.7f, 0.7f,  0.5f);
 glm::vec3 light_I_s = glm::vec3(0.5f, 0.5f,  0.5f);
 glm::vec3 light_pos = camera_position;
 glm::vec3 light_color = glm::vec3(0.9f, 0.9f,  0.9f);
-Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos);
+Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color);
 
 // plane to put the aquarium on top of it
 Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane in y=0
@@ -174,7 +174,8 @@ int main( void )
     // ------------------------------------------------------------------------------------
     water->setCubeColor(glm::vec3(0.67, 0.84, 0.9));
     water->generatePlanes();
-    water->setCubeMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
+    //water->setCubeMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
+    water->setMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
     scene_objects.push_back(water->top);
     scene_objects.push_back(water->floor);
     scene_objects.push_back(water->left);
@@ -188,7 +189,8 @@ int main( void )
     // ------------------------------------------------------------------------------------
     aquarium->setAquariumColor(glm::vec3(0.94, 0.94, 0.94));
     aquarium->generatePlanes();
-    aquarium->setAquariumMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
+    //aquarium->setAquariumMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1))
+    aquarium->setMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
     scene_objects.push_back(aquarium->floor);
     scene_objects.push_back(aquarium->left);
     scene_objects.push_back(aquarium->right);
@@ -213,13 +215,7 @@ int main( void )
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // send light data to shaders
-        glUniform3f(glGetUniformLocation(programID, "lightPos"), light_pos[0], light_pos[1], light_pos[2]);
-        glUniform3f(glGetUniformLocation(programID, "lightColor"), light_color[0], light_color[1], light_color[2]);
-
-        // test jsp si ca aide
-        /*glBindAttribLocation(programID, 0, "vertices_position_modelspace");
-        glBindAttribLocation(programID, 1, "vertexNormal");
-        glBindAttribLocation(programID, 2, "coord");*/
+        light->sendDataToShaders(programID);
 
         // Use our shader
         glUseProgram(programID);
@@ -227,6 +223,7 @@ int main( void )
         // CAMERA
         camera->MVP(cameraRotates, speedUp, slowDown);
         camera->sendMVPtoShader(programID);
+        glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
 
 
         // Draw the triangles !
