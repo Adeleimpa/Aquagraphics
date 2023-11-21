@@ -21,11 +21,16 @@ layout(location = 2) in vec2 coord;
 // send normals to fragment shader
 out vec3 fragNormal;
 
+// send fragment position to fragment shader
+out vec3 FragPos;  
+
 
 void main(){
 
         transformation_matrix = proj_matrix * view_matrix * model_matrix; // MVP but inverted! (order matters)
         gl_Position = transformation_matrix * vec4(vertices_position_modelspace, 1);
+
+        FragPos = vec3(model_matrix * vec4(vertices_position_modelspace, 1.0));
 
         fragNormal = vertexNormal;
 

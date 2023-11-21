@@ -25,7 +25,7 @@ public:
 
     GLuint vertexbuffer, normalbuffer, elementbuffer, buffer_coord_txt;
 
-    glm::vec4 color = glm::vec4(0.0,0.0,0.0,0.0); // default value
+    glm::vec3 color = glm::vec3(0.0,0.0,0.0); // default value
 
     Material material;
 
@@ -35,7 +35,7 @@ public:
 
     SceneObject() {}
 
-    void setColor(glm::vec4 color){
+    void setColor(glm::vec3 color){
         this->color = color;
     }
 
@@ -43,7 +43,7 @@ public:
     void draw(GLuint programID) const {
         if( triangles.size() == 0 ) return;
 
-        glUniform4f(glGetUniformLocation(programID, "mesh_color"), color[0], color[1], color[2], color[3]);
+        glUniform3f(glGetUniformLocation(programID, "objectColor"), color[0], color[1], color[2]);
 
 
         // 1rst attribute buffer : vertices
@@ -74,8 +74,8 @@ public:
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
         // switch from one to another 
-        glPolygonMode (GL_FRONT_AND_BACK, GL_LINE); // displays meshs
-        //glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+        //glPolygonMode (GL_FRONT_AND_BACK, GL_LINE); // displays meshs
+        glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
         glEnableClientState(GL_VERTEX_ARRAY) ;
         glEnableClientState (GL_NORMAL_ARRAY);

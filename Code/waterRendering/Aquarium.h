@@ -58,7 +58,7 @@ public:
         back->generateBuffers();
     }
 
-    void setAquariumColor(glm::vec4 color){
+    void setAquariumColor(glm::vec3 color){
         floor->setColor(color);
         left->setColor(color);
         right->setColor(color);

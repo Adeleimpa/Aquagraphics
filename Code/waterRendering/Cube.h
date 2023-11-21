@@ -63,7 +63,7 @@ public:
         back->generateBuffers();
     }
 
-    void setCubeColor(glm::vec4 color){
+    void setCubeColor(glm::vec3 color){
         top->setColor(color);
         floor->setColor(color);
         left->setColor(color);

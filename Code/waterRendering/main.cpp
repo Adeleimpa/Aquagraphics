@@ -70,6 +70,7 @@ glm::vec3 light_I_a = glm::vec3(0.5f, 0.5f,  0.5f);
 glm::vec3 light_I_d = glm::vec3(0.5f, 0.5f,  0.5f);
 glm::vec3 light_I_s = glm::vec3(0.5f, 0.5f,  0.5f);
 glm::vec3 light_pos = camera_position;
+glm::vec3 light_color = glm::vec3(0.9f, 0.9f,  0.9f);
 Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos);
 
 // plane to put the aquarium on top of it
@@ -162,7 +163,7 @@ int main( void )
     plane->generatePlane(1.0);
     plane->generateBuffers();
 
-    plane->setColor(glm::vec4(0.5, 0.27, 0.11, 0.0));
+    plane->setColor(glm::vec3(0.5, 0.27, 0.11));
     plane->setMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
     scene_objects.push_back(plane);
     // ------------------------------------------------------------------------------------
@@ -171,7 +172,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     // WATER
     // ------------------------------------------------------------------------------------
-    water->setCubeColor(glm::vec4(0.67, 0.84, 0.9, 0.0));
+    water->setCubeColor(glm::vec3(0.67, 0.84, 0.9));
     water->generatePlanes();
     water->setCubeMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
     scene_objects.push_back(water->top);
@@ -185,7 +186,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     // AQUARIUM
     // ------------------------------------------------------------------------------------
-    aquarium->setAquariumColor(glm::vec4(0.94, 0.94, 0.94, 0.0));
+    aquarium->setAquariumColor(glm::vec3(0.94, 0.94, 0.94));
     aquarium->generatePlanes();
     aquarium->setAquariumMaterial(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.1, 0.1, 0.1));
     scene_objects.push_back(aquarium->floor);
@@ -211,8 +212,9 @@ int main( void )
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // light
+        // send light data to shaders
         glUniform3f(glGetUniformLocation(programID, "lightPos"), light_pos[0], light_pos[1], light_pos[2]);
+        glUniform3f(glGetUniformLocation(programID, "lightColor"), light_color[0], light_color[1], light_color[2]);
 
         // test jsp si ca aide
         /*glBindAttribLocation(programID, 0, "vertices_position_modelspace");
