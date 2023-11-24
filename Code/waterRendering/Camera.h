@@ -30,7 +30,7 @@ public:
         Model_Matrix = glm::mat4(); // identity matrix (model will be at the origin) then change
         Projection_Matrix = getProjectionMatrix();
 
-        if(cameraRotates){
+        /*if(cameraRotates){
 
             if(speedUp){
                 increment += 1.0;
@@ -38,7 +38,7 @@ public:
                 increment /= 1.3;
             }
             Model_Matrix = glm::rotate(Model_Matrix,glm::radians(angle_in_degrees+=increment), glm::vec3(0.0,1.0,0.0));
-        }
+        }*/
     }
 
     void scaleModelMat(glm::vec3 scaling_factor){

@@ -82,7 +82,7 @@ public:
     }
 
     void animate(float amplitude, float frequency, float time) {
-        top->animateWater(amplitude, frequency, time);
+        top->animateWater(amplitude, frequency, time, side_len/2.0f);
     }
 
 

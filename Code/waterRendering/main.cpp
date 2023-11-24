@@ -224,8 +224,8 @@ int main( void )
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
 
         // animate water
-        float amplitude = 0.5f * sin(glfwGetTime());  // Example: amplitude changes over time
-        float frequency = 1.0f;  // Example: constant frequency
+        float amplitude = 0.12f * sin(glfwGetTime());  // Example: amplitude changes over time
+        float frequency = 1.8f;  // Example: constant frequency
         water->animate(amplitude, frequency, currentFrame);
 
         // Draw the triangles !
@@ -279,7 +279,7 @@ void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
             setCamPosition(glm::vec3( 0, 0.55, 5));
             setVerticalAngle(0.0f);
         }else{
-            cameraRotates = false; // switch to true to turn around
+            cameraRotates = true;
             setCamPosition(glm::vec3( 0, 5, 5));
             setVerticalAngle(-3.14f/4.0f);
         }
