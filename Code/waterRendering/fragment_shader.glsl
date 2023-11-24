@@ -2,7 +2,7 @@
 
 // Ouput data
 //(out) vec4 color;
-//(out) vec4 FragColor;
+out vec4 FragColor;
 
 in vec2 coord_txt;
 
@@ -46,7 +46,11 @@ void main(){
         vec3 result = (ambient + diffuse + specular) * objectColor;
 
 
+        // gl_FragColor deprecated
         //gl_FragColor = vec4(objectColor, 1.0); // simple color
-        gl_FragColor = vec4(result, 1.0); // phong color
+        //gl_FragColor = vec4(result, 1.0); // phong color
+        FragColor = vec4(result, 1.0); // phong color
+
+
 
 }
