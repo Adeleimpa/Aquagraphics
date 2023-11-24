@@ -51,6 +51,4 @@ void main(){
         //gl_FragColor = vec4(result, 1.0); // phong color
         FragColor = vec4(result, 1.0); // phong color
 
-
-
 }

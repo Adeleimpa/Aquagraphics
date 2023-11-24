@@ -31,19 +31,19 @@ public:
         top = new Plane(side_len, side_len, side_unit, side_unit, center_top, 1);
         // FLOOR PLANE
         glm::vec3 center_floor =  glm::vec3(center[0], center[1] - side_len/2. , center[2]);
-        floor = new Plane(side_len, side_len, side_unit, side_unit, center_floor, 1);
+        floor = new Plane(side_len, side_len, 2, 2, center_floor, 1);
         // LEFT PLANE
         glm::vec3 center_left =  glm::vec3(center[0] - side_len/2., center[1], center[2] - side_len);
-        left = new Plane(side_len, side_len, side_unit, side_unit, center_left, 0);
+        left = new Plane(side_len, side_len, 2, 2, center_left, 0);
         // RIGHT PLANE
         glm::vec3 center_right =  glm::vec3(center[0] + side_len/2., center[1], center[2] - side_len);
-        right = new Plane(side_len, side_len, side_unit, side_unit, center_right, 0);
+        right = new Plane(side_len, side_len, 2, 2, center_right, 0);
         // BACK PLANE
         glm::vec3 center_back =  glm::vec3(center[0], center[1], center[2] - side_len/2.);
-        back = new Plane(side_len, side_len, side_unit, side_unit, center_back, 2);
+        back = new Plane(side_len, side_len, 2, 2, center_back, 2);
         // FRONT PLANE
         glm::vec3 center_front =  glm::vec3(center[0], center[1], center[2] + side_len/2.);
-        front = new Plane(side_len, side_len, side_unit, side_unit, center_front, 2);
+        front = new Plane(side_len, side_len, 2, 2, center_front, 2);
 
     }
 

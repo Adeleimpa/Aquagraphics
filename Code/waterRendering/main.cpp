@@ -77,10 +77,10 @@ Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color
 Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane in y=0
 
 // water
-Cube *water = new Cube(2.0, 10,  glm::vec3(0.0,0.0,0.0));
+Cube *water = new Cube(2.0, 30,  glm::vec3(0.0,0.0,0.0));
 
 // aquarium
-Aquarium *aquarium = new Aquarium(2.0, 10,  glm::vec3(0.0,0.0,0.0));
+Aquarium *aquarium = new Aquarium(2.0, 2,  glm::vec3(0.0,0.0,0.0));
 
 
 
