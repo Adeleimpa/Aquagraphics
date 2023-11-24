@@ -227,15 +227,6 @@ int main( void )
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){
 
-            /*if(scene_objects[i]->isTerrain==0){ // terrain
-                // send textures to shader
-                grass_texture->sendTextureToShader(programID, "texture_grass", 0);
-                rock_texture->sendTextureToShader(programID, "texture_rock", 1);
-                snowrocks_texture->sendTextureToShader(programID, "texture_snowrocks", 2);
-            }else{
-                sun_texture->sendTextureToShader(programID, "texture_sun", 3);
-            }*/
-
             scene_objects[i]->loadBuffers();
             scene_objects[i]->draw(programID);
         }
