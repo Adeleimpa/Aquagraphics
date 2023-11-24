@@ -81,6 +81,10 @@ public:
         back->setPlaneMaterial(a, d, s);
     }
 
+    void animate(float amplitude, float frequency, float time) {
+        top->animateWater(amplitude, frequency, time);
+    }
+
 
 };
 

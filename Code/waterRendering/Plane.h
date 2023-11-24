@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <iostream>
+#include <cmath>
+
 // Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -163,6 +165,26 @@ public:
         }
     }
 
+
+    // --------------------------------------------------------------
+    // Functions to animate a plane representing the surface of water
+    // --------------------------------------------------------------
+    float calculateHeight(float x, float amplitude, float frequency, float phaseShift) {
+        return amplitude * sin(frequency * x + phaseShift);
+    }
+     
+    void animateWater(float amplitude, float frequency, float time) {
+
+        for (size_t i = 0; i < triangles.size(); ++i) {
+            
+            for (size_t j = 0; j < triangles[i].size(); ++j) {
+                unsigned short vertexIndex = triangles[i][j];
+                float animatedHeight = calculateHeight(indexed_vertices[vertexIndex][0], amplitude, frequency, time);
+                indexed_vertices[vertexIndex][1] = animatedHeight; // edit y coord
+            }
+        }
+    }
+    // --------------------------------------------------------------
 
 
 };

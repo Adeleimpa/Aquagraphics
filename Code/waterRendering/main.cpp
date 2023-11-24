@@ -223,10 +223,13 @@ int main( void )
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
 
+        // animate water
+        float amplitude = 0.5f * sin(glfwGetTime());  // Example: amplitude changes over time
+        float frequency = 1.0f;  // Example: constant frequency
+        water->animate(amplitude, frequency, currentFrame);
 
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){
-
             scene_objects[i]->loadBuffers();
             scene_objects[i]->draw(programID);
         }
@@ -271,13 +274,12 @@ void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
 
         /// turn around axis
 
-        // TODO doesn't work when center of plane is not 0,0,0
         if(cameraRotates){
             cameraRotates = false;
             setCamPosition(glm::vec3( 0, 0.55, 5));
             setVerticalAngle(0.0f);
         }else{
-            cameraRotates = true;
+            cameraRotates = false; // switch to true to turn around
             setCamPosition(glm::vec3( 0, 5, 5));
             setVerticalAngle(-3.14f/4.0f);
         }
