@@ -13,7 +13,6 @@ uniform vec3 k_s;
 
 // light data
 uniform vec3 lightPos;
-uniform vec3 lightColor;
 uniform vec3 I_a;
 uniform vec3 I_d;
 uniform vec3 I_s;

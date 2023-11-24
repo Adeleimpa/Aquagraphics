@@ -23,13 +23,13 @@ public:
         I_diffuse = d;
         I_specular = s;
         position = pos;
-        color = c;
+        color = c; // useless
     }
 
     void sendDataToShaders(GLuint programID){
 
         glUniform3f(glGetUniformLocation(programID, "lightPos"), position[0], position[1], position[2]);
-        glUniform3f(glGetUniformLocation(programID, "lightColor"), color[0], color[1], color[2]);
+        //glUniform3f(glGetUniformLocation(programID, "lightColor"), color[0], color[1], color[2]);
 
         glUniform3f(glGetUniformLocation(programID, "I_a"), I_ambiant[0], I_ambiant[1], I_ambiant[2]);
         glUniform3f(glGetUniformLocation(programID, "I_d"), I_diffuse[0], I_diffuse[1], I_diffuse[2]);
