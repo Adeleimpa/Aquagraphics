@@ -29,10 +29,6 @@ public:
 
     Material material;
 
-    // transformations
-    std::vector<glm::vec3> transformations;
-    std::vector<int> index_transf; // 0 for scaling, 1 for translation, 2 for rotation
-
     SceneObject() {}
 
     void setColor(glm::vec3 color){
@@ -82,8 +78,8 @@ public:
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
         // switch from one to another 
-        //glPolygonMode (GL_FRONT_AND_BACK, GL_LINE); // displays meshs
-        glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+        glPolygonMode (GL_FRONT_AND_BACK, GL_LINE); // displays meshs
+        //glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
         glEnableClientState(GL_VERTEX_ARRAY) ;
         glEnableClientState (GL_NORMAL_ARRAY);

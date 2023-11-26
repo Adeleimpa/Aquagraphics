@@ -73,12 +73,12 @@ public:
     }
 
     void setCubeMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s){
-        top->setPlaneMaterial(a, d, s);
-        floor->setPlaneMaterial(a, d, s);
-        left->setPlaneMaterial(a, d, s);
-        right->setPlaneMaterial(a, d, s);
-        front->setPlaneMaterial(a, d, s);
-        back->setPlaneMaterial(a, d, s);
+        top->setMaterial(a, d, s);
+        floor->setMaterial(a, d, s);
+        left->setMaterial(a, d, s);
+        right->setMaterial(a, d, s);
+        front->setMaterial(a, d, s);
+        back->setMaterial(a, d, s);
     }
 
     void animate(float amplitude, float frequency, float time) {

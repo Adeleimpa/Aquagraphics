@@ -206,8 +206,8 @@ external/glfw-3.1.2/tests/clean: external/glfw-3.1.2/tests/CMakeFiles/windows.di
 # Target rules for target CMakeFiles/waterRendering.dir
 
 # All Build rule for target.
-CMakeFiles/waterRendering.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 CMakeFiles/waterRendering.dir/all: external/CMakeFiles/GLEW_1130.dir/all
+CMakeFiles/waterRendering.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/waterRendering.dir/build.make CMakeFiles/waterRendering.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/waterRendering.dir/build.make CMakeFiles/waterRendering.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/parallels/Desktop/Parallels Shared Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/build/CMakeFiles" --progress-num=72,73,74,75,76,77,78 "Built target waterRendering"

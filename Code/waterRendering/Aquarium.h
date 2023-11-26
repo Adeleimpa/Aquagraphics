@@ -66,10 +66,10 @@ public:
     }
 
     void setAquariumMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s){
-        floor->setPlaneMaterial(a, d, s);
-        left->setPlaneMaterial(a, d, s);
-        right->setPlaneMaterial(a, d, s);
-        back->setPlaneMaterial(a, d, s);
+        floor->setMaterial(a, d, s);
+        left->setMaterial(a, d, s);
+        right->setMaterial(a, d, s);
+        back->setMaterial(a, d, s);
     }
 
 };
