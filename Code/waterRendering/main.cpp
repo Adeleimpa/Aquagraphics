@@ -31,7 +31,6 @@ using namespace glm;
 #include "Camera.h"
 #include "SceneObject.h"
 #include "MeshObject.h"
-#include "Cube.h"
 #include "WaterCube.h"
 #include "Aquarium.h"
 #include "Light.h"
@@ -78,7 +77,6 @@ Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color
 Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane in y=0
 
 // water
-//Cube *water = new Cube(2.0, 30,  glm::vec3(0.0,0.0,0.0));
 WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
 
 // aquarium
@@ -178,15 +176,6 @@ int main( void )
     water->setColor(glm::vec3(0.67, 0.84, 0.9));
     water->setMaterial(glm::vec3(0.8, 0.8, 0.8), glm::vec3(0.7, 0.7, 0.7), glm::vec3(0.8, 0.8, 0.8));
     scene_objects.push_back(water);
-    /*water->setCubeColor(glm::vec3(0.67, 0.84, 0.9));
-    water->generatePlanes();
-    water->setCubeMaterial(glm::vec3(0.8, 0.8, 0.8), glm::vec3(0.7, 0.7, 0.7), glm::vec3(0.8, 0.8, 0.8));
-    scene_objects.push_back(water->top);
-    scene_objects.push_back(water->floor);
-    scene_objects.push_back(water->left);
-    scene_objects.push_back(water->right);
-    scene_objects.push_back(water->front);
-    scene_objects.push_back(water->back);*/
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
@@ -195,10 +184,10 @@ int main( void )
     aquarium->setAquariumColor(glm::vec3(0.94, 0.94, 0.94));
     aquarium->generatePlanes();
     aquarium->setAquariumMaterial(glm::vec3(0.8, 0.8, 0.8), glm::vec3(0.7, 0.7, 0.7), glm::vec3(0.8, 0.8, 0.8));
-    /*scene_objects.push_back(aquarium->floor);
+    scene_objects.push_back(aquarium->floor);
     scene_objects.push_back(aquarium->left);
     scene_objects.push_back(aquarium->right);
-    scene_objects.push_back(aquarium->back);*/
+    scene_objects.push_back(aquarium->back);
     // ------------------------------------------------------------------------------------
 
 
@@ -232,7 +221,7 @@ int main( void )
         // animate water
         float amplitude = 0.12f * sin(glfwGetTime());  // Example: amplitude changes over time
         float frequency = 1.8f;  // Example: constant frequency
-        //water->animate(amplitude, frequency, currentFrame);
+        water->animateWater(amplitude, frequency, currentFrame);
 
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){

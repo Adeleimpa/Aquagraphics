@@ -14,6 +14,19 @@ public:
         initCube();
     }
 
+    float calculateHeight(float x, float amplitude, float frequency, float phaseShift) {
+        return amplitude * sin(frequency * x + phaseShift);
+    }
+     
+    void animateWater(float amplitude, float frequency, float time) {
+
+        for (unsigned int vertexIndex = 0; vertexIndex <= 960; ++vertexIndex) { // top face vertices
+
+            float animatedHeight = calculateHeight(indexed_vertices[vertexIndex][0], amplitude, frequency, time);
+            indexed_vertices[vertexIndex][1] = animatedHeight + side_len/2.0f; // edit y coord
+        }
+    }
+
 private:
     glm::vec3 center;
     float side_len;
@@ -288,25 +301,21 @@ private:
                 c4 = c3 + 1;
 
                 if(j==0){ // col 1
-                    std::cout << "col 1" << std::endl;
                     c1 = 1114 + i - 1;
                     c3 = c1 + 1;
                 }
 
                 if(j==29){ // last col
-                    std::cout << "last col" << std::endl;
                     c2 = 1201 - i;
                     c4 = c2 - 1;
                 }
 
                 if(i==29){ // last row
-                    std::cout << "last row" << std::endl;
                     c3 = 992 + j;
                     c4 = c3 + 1;
                 }
 
                 if(i==0){ // row 1
-                    std::cout << "row1" << std::endl;
                     c1 = 1084 - j;
                     c2 = c1 - 1;
                 }

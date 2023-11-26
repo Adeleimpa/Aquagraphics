@@ -78,8 +78,8 @@ public:
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
         // switch from one to another 
-        glPolygonMode (GL_FRONT_AND_BACK, GL_LINE); // displays meshs
-        //glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+        //glPolygonMode (GL_FRONT_AND_BACK, GL_LINE); // displays meshs
+        glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
         glEnableClientState(GL_VERTEX_ARRAY) ;
         glEnableClientState (GL_NORMAL_ARRAY);
