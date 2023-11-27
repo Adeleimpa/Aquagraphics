@@ -82,6 +82,8 @@ WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
 // aquarium
 Aquarium *aquarium = new Aquarium(water->side_len, 2,  glm::vec3(0.0,0.0,0.0));
 
+// draw wired mesh or not
+bool wired = false;
 
 
 GLuint programID;
@@ -228,7 +230,7 @@ int main( void )
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){
             scene_objects[i]->loadBuffers();
-            scene_objects[i]->draw(programID);
+            scene_objects[i]->draw(programID, wired);
         }
 
         // Swap buffers
@@ -265,30 +267,46 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
 
+    /*if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+        std::cout << "Key pressed: " << key << std::endl;
+    }*/
+
 
     if( key == GLFW_KEY_C and action == GLFW_PRESS ){
-        std::cout << "You have pressed the key c : switch to orbital camera" << std::endl;
-
         /// turn around axis
 
         if(cameraRotates){
             cameraRotates = false;
             setCamPosition(glm::vec3( 0, 0.55, 5));
             setVerticalAngle(0.0f);
+            std::cout << "You have pressed the key C : switch to normal camera" << std::endl;
         }else{
             cameraRotates = true;
             setCamPosition(glm::vec3( 0, 5, 5));
             setVerticalAngle(-3.14f/4.0f);
+            std::cout << "You have pressed the key C : switch to orbital camera" << std::endl;
         }
 
-    }else if( key == GLFW_KEY_W and action == GLFW_PRESS ){ // Z on macbook keyboard
-        std::cout << "You have pressed the key Z : rotation speeds up" << std::endl;
+    }else if( key == GLFW_KEY_SLASH and action == GLFW_PRESS ){ // + on macbook keyboard
+        std::cout << "You have pressed the key + : rotation speeds up" << std::endl;
         /// accelerates camera
         speedUp = true;
-    }else if ( key == GLFW_KEY_Z and action == GLFW_PRESS ) { // W on macbook keyboard
-        std::cout << "You have pressed the key W : rotation slows down" << std::endl;
+    }else if ( key == GLFW_KEY_EQUAL and action == GLFW_PRESS ) { // - on macbook keyboard
+        std::cout << "You have pressed the key - : rotation slows down" << std::endl;
         /// slows down camera
         slowDown = true;
+    }
+
+
+    else if( key == GLFW_KEY_Z and action == GLFW_PRESS ){ // W on macbook keyboard
+
+        if(wired){
+            wired = false;
+            std::cout << "You have pressed the key W : wire mode deactivated" << std::endl;
+        }else{
+            wired = true;
+            std::cout << "You have pressed the key W : wire mode activated" << std::endl;
+        }
     }
 
 
