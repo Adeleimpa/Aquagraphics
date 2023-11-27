@@ -10,6 +10,9 @@
 
 class WaterCube : public SceneObject {
 public:
+    glm::vec3 center;
+    float side_len;
+    
     WaterCube(const glm::vec3& center, float side_len) : center(center), side_len(side_len) {
         initCube();
     }
@@ -28,9 +31,6 @@ public:
     }
 
 private:
-    glm::vec3 center;
-    float side_len;
-
 
     void initCube() {
 

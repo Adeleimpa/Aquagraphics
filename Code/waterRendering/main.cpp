@@ -80,7 +80,7 @@ Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane
 WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
 
 // aquarium
-Aquarium *aquarium = new Aquarium(2.0, 2,  glm::vec3(0.0,0.0,0.0));
+Aquarium *aquarium = new Aquarium(water->side_len, 2,  glm::vec3(0.0,0.0,0.0));
 
 
 
@@ -215,6 +215,8 @@ int main( void )
 
         // CAMERA
         camera->MVP(cameraRotates, speedUp, slowDown);
+        speedUp = false;
+        slowDown = false;
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
 
@@ -279,6 +281,14 @@ void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
             setVerticalAngle(-3.14f/4.0f);
         }
 
+    }else if( key == GLFW_KEY_W and action == GLFW_PRESS ){ // Z on macbook keyboard
+        std::cout << "You have pressed the key Z : rotation speeds up" << std::endl;
+        /// accelerates camera
+        speedUp = true;
+    }else if ( key == GLFW_KEY_Z and action == GLFW_PRESS ) { // W on macbook keyboard
+        std::cout << "You have pressed the key W : rotation slows down" << std::endl;
+        /// slows down camera
+        slowDown = true;
     }
 
 

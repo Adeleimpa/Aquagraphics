@@ -20,7 +20,7 @@ public:
     Plane *floor, *left, *right, *back;
 
     double border; // aquarium goes upper than water
-    double space = 0.02; // space between water and parois of aquarium
+    double space = 0.01; // space between water and parois of aquarium
 
     Aquarium(){}
 
@@ -33,16 +33,16 @@ public:
 
         // FLOOR PLANE
         glm::vec3 center_floor =  glm::vec3(center[0], center[1] - side_len/2. , center[2]);
-        floor = new Plane(side_len, side_len, side_unit, side_unit, center_floor, 1);
+        floor = new Plane(side_len + space*2., side_len + space*2., side_unit, side_unit, center_floor, 1);
         // LEFT PLANE
-        glm::vec3 center_left =  glm::vec3(center[0] - side_len/2. - space, center[1], center[2] - side_len);
-        left = new Plane(side_len, side_len+border, side_unit, side_unit, center_left, 0);
+        glm::vec3 center_left =  glm::vec3(center[0] - side_len/2. - space, center[1] + border/2., center[2] - side_len - space/2.);
+        left = new Plane(side_len + space, side_len + border, side_unit, side_unit, center_left, 0);
         // RIGHT PLANE
-        glm::vec3 center_right =  glm::vec3(center[0] + side_len/2. + space, center[1], center[2] - side_len);
-        right = new Plane(side_len, side_len+border, side_unit, side_unit, center_right, 0);
+        glm::vec3 center_right =  glm::vec3(center[0] + side_len/2. + space, center[1] + border/2., center[2] - side_len - space/2.);
+        right = new Plane(side_len + space, side_len + border, side_unit, side_unit, center_right, 0);
         // BACK PLANE
-        glm::vec3 center_back =  glm::vec3(center[0], center[1], center[2] - side_len/2. - space);
-        back = new Plane(side_len, side_len+border, side_unit, side_unit, center_back, 2);
+        glm::vec3 center_back =  glm::vec3(center[0], center[1] + border/2., center[2] - side_len/2. - space);
+        back = new Plane(side_len + space*2., side_len + border, side_unit, side_unit, center_back, 2);
 
     }
 

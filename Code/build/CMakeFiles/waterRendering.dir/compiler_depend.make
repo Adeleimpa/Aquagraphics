@@ -1384,7 +1384,6 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
   ../waterRendering/image_ppm.h \
   ../waterRendering/Camera.h \
   ../waterRendering/MeshObject.h \
-  ../waterRendering/Cube.h \
   ../waterRendering/WaterCube.h \
   ../waterRendering/Aquarium.h \
   ../waterRendering/Light.h
@@ -1395,8 +1394,6 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
 ../waterRendering/Aquarium.h:
 
 ../waterRendering/WaterCube.h:
-
-../waterRendering/Cube.h:
 
 ../waterRendering/MeshObject.h:
 
