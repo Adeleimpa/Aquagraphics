@@ -46,8 +46,7 @@ void main(){
 
 
         // gl_FragColor deprecated
-        //gl_FragColor = vec4(objectColor, 1.0); // simple color
-        //gl_FragColor = vec4(result, 1.0); // phong color
+        //FragColor = vec4(objectColor, 1.0); // simple color
         FragColor = vec4(result, 1.0); // phong color
 
 }
