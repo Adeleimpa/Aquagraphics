@@ -65,11 +65,11 @@ public:
         back->setColor(color);
     }
 
-    void setAquariumMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s){
-        floor->setMaterial(a, d, s);
-        left->setMaterial(a, d, s);
-        right->setMaterial(a, d, s);
-        back->setMaterial(a, d, s);
+    void setAquariumMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s, float alpha){
+        floor->setMaterial(a, d, s, alpha);
+        left->setMaterial(a, d, s, alpha);
+        right->setMaterial(a, d, s, alpha);
+        back->setMaterial(a, d, s, alpha);
     }
 
 };

@@ -35,10 +35,11 @@ public:
         this->color = color;
     }
 
-    void setMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s){
+    void setMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s, float alpha){
         material.k_ambiant = a;
         material.k_diffuse = d;
         material.k_specular = s;
+        material.transparency = alpha;
     }
 
 
@@ -49,6 +50,7 @@ public:
         glUniform3f(glGetUniformLocation(programID, "k_a"), material.k_ambiant[0], material.k_ambiant[1], material.k_ambiant[2]);
         glUniform3f(glGetUniformLocation(programID, "k_d"), material.k_diffuse[0], material.k_diffuse[1], material.k_diffuse[2]);
         glUniform3f(glGetUniformLocation(programID, "k_s"), material.k_specular[0], material.k_specular[1], material.k_specular[2]);
+        glUniform1f(glGetUniformLocation(programID, "transparency"), material.transparency);
 
         // 1rst attribute buffer : vertices
         glEnableVertexAttribArray(0); // layout (location = 0)

@@ -75,6 +75,7 @@ Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color
 
 // plane to put the aquarium on top of it
 Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane in y=0
+Plane *sky = new Plane(4.0, 4.0, 4, 4, glm::vec3(0.0,3.0,0.0), 1); // plane in y=0
 
 // water
 WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
@@ -90,8 +91,19 @@ GLuint programID;
 /*******************************************************************************/
 
 
+void enableBlending() {
+    glEnable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+    glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);
+}
+
+
 int main( void )
 {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    enableBlending(); // for transparency
+
+
     // Initialise GLFW
     if( !glfwInit() )
     {
@@ -166,8 +178,19 @@ int main( void )
     plane->generateBuffers();
 
     plane->setColor(glm::vec3(0.5, 0.27, 0.11));
-    plane->setMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f));
+    plane->setMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 1.);
     scene_objects.push_back(plane);
+    // ------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------
+    // SKY
+    // ------------------------------------------------------------------------------------
+    sky->generatePlane(1.0);
+    sky->generateBuffers();
+
+    sky->setColor(glm::vec3(1.0, 0.0, 0.0));
+    sky->setMaterial(glm::vec3(0.2f, 0.0f, 0.0f), glm::vec3(0.6f, 0.0f, 0.0f), glm::vec3(0.1f, 0.0f, 0.0f), 1.);
+    scene_objects.push_back(sky);
     // ------------------------------------------------------------------------------------
 
 
@@ -176,7 +199,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     water->generateBuffers();
     water->setColor(glm::vec3(0.67, 0.84, 0.9));
-    water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f));
+    water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f), 0.5);
     scene_objects.push_back(water);
     // ------------------------------------------------------------------------------------
 
@@ -185,7 +208,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     aquarium->setAquariumColor(glm::vec3(0.94, 0.94, 0.94));
     aquarium->generatePlanes();
-    aquarium->setAquariumMaterial(glm::vec3(0.9f, 0.9f, 0.9f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.9f, 0.9f, 0.9f));
+    aquarium->setAquariumMaterial(glm::vec3(0.9f, 0.9f, 0.9f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.9f, 0.9f, 0.9f), 0.2);
     scene_objects.push_back(aquarium->floor);
     scene_objects.push_back(aquarium->left);
     scene_objects.push_back(aquarium->right);

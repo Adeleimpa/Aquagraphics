@@ -13,6 +13,8 @@ public:
     glm::vec3 k_diffuse;
     glm::vec3 k_specular;
 
+    float transparency; // alpha
+
 };
 
 

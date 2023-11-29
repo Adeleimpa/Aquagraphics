@@ -10,6 +10,7 @@ uniform vec3 objectColor;
 uniform vec3 k_a;
 uniform vec3 k_d;
 uniform vec3 k_s;
+uniform float transparency;
 
 // light data
 uniform vec3 lightPos;
@@ -45,8 +46,8 @@ void main(){
         vec3 result = (ambient + diffuse + specular) * objectColor;
 
 
-        // gl_FragColor deprecated
         //FragColor = vec4(objectColor, 1.0); // simple color
-        FragColor = vec4(result, 1.0); // phong color
+        FragColor = vec4(result, transparency); // phong color 
+
 
 }
