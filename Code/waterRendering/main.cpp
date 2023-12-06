@@ -74,7 +74,7 @@ glm::vec3 light_color = glm::vec3(1.0f, 1.0f,  1.0f);
 Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color);
 
 // plane to put the aquarium on top of it
-Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.0,0.0), 1); // plane in y=0
+Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.01,0.0), 1); // plane in y=0
 Plane *sky = new Plane(4.0, 4.0, 4, 4, glm::vec3(0.0,3.0,0.0), 1); // plane in y=0
 
 // water
@@ -178,8 +178,7 @@ int main( void )
     plane->generateBuffers();
 
     plane->setColor(glm::vec3(0.5, 0.27, 0.11));
-    plane->setMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 1.);
-    scene_objects.push_back(plane);
+    plane->setMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
@@ -189,8 +188,7 @@ int main( void )
     sky->generateBuffers();
 
     sky->setColor(glm::vec3(1.0, 0.0, 0.0));
-    sky->setMaterial(glm::vec3(0.2f, 0.0f, 0.0f), glm::vec3(0.6f, 0.0f, 0.0f), glm::vec3(0.1f, 0.0f, 0.0f), 1.);
-    scene_objects.push_back(sky);
+    sky->setMaterial(glm::vec3(0.2f, 0.0f, 0.0f), glm::vec3(0.6f, 0.0f, 0.0f), glm::vec3(0.1f, 0.0f, 0.0f), 0.);
     // ------------------------------------------------------------------------------------
 
 
@@ -200,7 +198,6 @@ int main( void )
     water->generateBuffers();
     water->setColor(glm::vec3(0.67, 0.84, 0.9));
     water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f), 0.5);
-    scene_objects.push_back(water);
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
@@ -209,11 +206,23 @@ int main( void )
     aquarium->setAquariumColor(glm::vec3(0.94, 0.94, 0.94));
     aquarium->generatePlanes();
     aquarium->setAquariumMaterial(glm::vec3(0.9f, 0.9f, 0.9f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.9f, 0.9f, 0.9f), 0.2);
+    // ------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------
+    // Add objects to scene_objects
+    // Attention importance de l'ordre pour la transparence
+    scene_objects.push_back(sky);
+    scene_objects.push_back(plane);
+
     scene_objects.push_back(aquarium->floor);
     scene_objects.push_back(aquarium->left);
     scene_objects.push_back(aquarium->right);
     scene_objects.push_back(aquarium->back);
+
+    scene_objects.push_back(water);
     // ------------------------------------------------------------------------------------
+
+
 
 
     // For speed computation
@@ -222,6 +231,9 @@ int main( void )
     double counter_flying = 0.0;
 
     do{
+
+        enableBlending(); // for transparency
+
         // Measure speed
         // per-frame time logic
         // --------------------
