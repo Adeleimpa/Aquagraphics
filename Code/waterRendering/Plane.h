@@ -90,7 +90,7 @@ public:
                 for (int j = 0; j <= w; j++) {
                     current_corner = glm::vec3(start_corner[0], start_corner[1] + j*step_2, start_corner[2] + i*step_1);
                     glm::vec3 normal = glm::vec3(n_orient, 0.0, 0.0);
-                    coord_texture.push_back(glm::vec2(1.0-current_corner[1]/height, current_corner[2]/width)); // todo check
+                    coord_texture.push_back(glm::vec2(1.0-current_corner[1]/height, current_corner[2]/width));
                     indexed_vertices.push_back(current_corner);
                     normals.push_back(normal);
                 }
@@ -119,7 +119,7 @@ public:
                 for (int j = 0; j <= w; j++) {
                     current_corner = glm::vec3(start_corner[0] + i*step_1, start_corner[1] + j*step_2, start_corner[2]);
                     glm::vec3 normal = glm::vec3(0.0, 0.0, n_orient);
-                    coord_texture.push_back(glm::vec2(current_corner[0]/width, 1.0-current_corner[1]/height)); // todo check
+                    coord_texture.push_back(glm::vec2(current_corner[0]/width, 1.0 - current_corner[2]/height));
                     indexed_vertices.push_back(current_corner);
                     normals.push_back(normal);
                 }
