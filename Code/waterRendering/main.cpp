@@ -34,6 +34,7 @@ using namespace glm;
 #include "WaterCube.h"
 #include "Aquarium.h"
 #include "Light.h"
+#include "Skybox.h"
 
 GLFWwindow* window;
 
@@ -75,7 +76,9 @@ Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color
 
 // plane to put the aquarium on top of it
 Plane *plane = new Plane(3.0, 3.0, 10, 10, glm::vec3(0.0,-1.01,0.0), 1); // plane in y=0
-Plane *sky = new Plane(4.0, 4.0, 4, 4, glm::vec3(0.0,3.0,0.0), 1); // plane in y=0
+
+// skybox
+Skybox *skybox = new Skybox(glm::vec3(0.0,0.0,0.0), 100.0);
 
 // water
 WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
@@ -182,13 +185,11 @@ int main( void )
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
-    // SKY
-    // ------------------------------------------------------------------------------------
-    sky->generatePlane(1.0);
-    sky->generateBuffers();
-
-    sky->setColor(glm::vec3(1.0, 0.0, 0.0));
-    sky->setMaterial(glm::vec3(0.2f, 0.0f, 0.0f), glm::vec3(0.6f, 0.0f, 0.0f), glm::vec3(0.1f, 0.0f, 0.0f), 0.);
+    // SKYBOX
+    // -----------------------------------------------------------------------------------_
+    skybox->generatePlanes();
+    skybox->setCubeColor(glm::vec3(0.0f, 1.0f, 0.0f));
+    skybox->setCubeMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
     // ------------------------------------------------------------------------------------
 
 
@@ -211,7 +212,14 @@ int main( void )
     // ------------------------------------------------------------------------------------
     // Add objects to scene_objects
     // Attention importance de l'ordre pour la transparence
-    scene_objects.push_back(sky);
+    //scene_objects.push_back(sky);
+    scene_objects.push_back(skybox->top);
+    scene_objects.push_back(skybox->floor);
+    scene_objects.push_back(skybox->left);
+    scene_objects.push_back(skybox->right);
+    scene_objects.push_back(skybox->back);
+    scene_objects.push_back(skybox->front);
+
     scene_objects.push_back(plane);
 
     scene_objects.push_back(aquarium->floor);

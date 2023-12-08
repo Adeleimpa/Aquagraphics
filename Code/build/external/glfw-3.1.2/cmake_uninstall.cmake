@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "/home/parallels/Desktop/Parallels Shared Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/build/external/glfw-3.1.2/install_manifest.txt")
-  message(FATAL_ERROR "Cannot find install manifest: \"/home/parallels/Desktop/Parallels Shared Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/build/external/glfw-3.1.2/install_manifest.txt\"")
+if (NOT EXISTS "/media/psf/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: \"/media/psf/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2/install_manifest.txt\"")
 endif()
 
-file(READ "/home/parallels/Desktop/Parallels Shared Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/build/external/glfw-3.1.2/install_manifest.txt" files)
+file(READ "/media/psf/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})

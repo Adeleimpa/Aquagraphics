@@ -1,7 +1,7 @@
 external/glfw-3.1.2/tests/CMakeFiles/empty.dir/empty.c.o: \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/tests/empty.c \
+ /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/tests/empty.c \
  /usr/include/stdc-predef.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/deps/tinycthread.h \
+ /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/tinycthread.h \
  /usr/include/time.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -42,9 +42,9 @@ external/glfw-3.1.2/tests/CMakeFiles/empty.dir/empty.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
+ /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
+ /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
  /usr/include/inttypes.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \

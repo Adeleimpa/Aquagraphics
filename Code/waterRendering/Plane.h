@@ -46,7 +46,7 @@ public:
         if(xyz == 0){ // x = 0
             //std::cout << "x=0" << std::endl;
             bottom_left = glm::vec3(center[0], center[1]-height/2, center[2]+width/2);
-            bottom_right = glm::vec3(center[0], center[1-height/2], center[2]-width/2);
+            bottom_right = glm::vec3(center[0], center[1]-height/2, center[2]-width/2);
             top_right = glm::vec3(center[0], center[1]+height/2, center[2]+width/2);
             top_left = glm::vec3(center[0], center[1]+height/2, center[2]-width/2);
 

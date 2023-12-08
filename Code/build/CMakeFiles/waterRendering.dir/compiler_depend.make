@@ -1386,7 +1386,8 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
   ../waterRendering/MeshObject.h \
   ../waterRendering/WaterCube.h \
   ../waterRendering/Aquarium.h \
-  ../waterRendering/Light.h
+  ../waterRendering/Light.h \
+  ../waterRendering/Skybox.h
 
 
 ../waterRendering/Light.h:
@@ -2088,6 +2089,8 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
 /usr/include/c++/11/bits/stl_bvector.h:
 
 /usr/include/c++/11/bits/functional_hash.h:
+
+../waterRendering/Skybox.h:
 
 /usr/include/c++/11/bits/move.h:
 

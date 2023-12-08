@@ -1,9 +1,9 @@
 external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/glfwinfo.c.o: \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/tests/glfwinfo.c \
+ /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/tests/glfwinfo.c \
  /usr/include/stdc-predef.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
+ /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h /usr/include/GL/gl.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
+ /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
  /usr/include/inttypes.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -57,4 +57,4 @@ external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/glfwinfo.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Documents/Montpellier/UM/Semestre3/Projet_JEUX_3D/Aquagraphics/Code/external/glfw-3.1.2/deps/getopt.h
+ /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/getopt.h
