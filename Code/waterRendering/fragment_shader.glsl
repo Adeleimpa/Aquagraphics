@@ -49,8 +49,8 @@ void main(){
 
 
         if(isSkybox == 1){
-                FragColor = texture(skybox_txt, coord_txt);
-                //FragColor = vec4(objectColor, 0.0); // simple color
+                //FragColor = texture(skybox_txt, coord_txt);
+                FragColor = vec4(objectColor, 0.0); // simple color
         }else{
                 //FragColor = vec4(objectColor, 0.0); // simple color
                 FragColor = vec4(result, transparency); // phong color 

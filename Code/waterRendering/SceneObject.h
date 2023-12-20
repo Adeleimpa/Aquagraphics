@@ -10,43 +10,45 @@
 
 #include "Material.h"
 
-
-class SceneObject {
+class SceneObject
+{
 
 private:
-
 public:
-
     std::vector<unsigned short> indices; // Triangles concaténés dans une liste
-    std::vector<std::vector<unsigned short> > triangles;
+    std::vector<std::vector<unsigned short>> triangles;
     std::vector<glm::vec3> indexed_vertices;
     std::vector<glm::vec2> coord_texture; // texture
     std::vector<glm::vec3> normals;
 
+    // ids of frame buffer objects
     GLuint vertexbuffer, normalbuffer, elementbuffer, buffer_coord_txt;
 
     bool isSkybox;
 
-    glm::vec3 color = glm::vec3(0.0,0.0,0.0); // default value
+    glm::vec3 color = glm::vec3(0.0, 0.0, 0.0); // default value
 
     Material material;
 
     SceneObject() {}
 
-    void setColor(glm::vec3 color){
+    void setColor(glm::vec3 color)
+    {
         this->color = color;
     }
 
-    void setMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s, float alpha){
+    void setMaterial(glm::vec3 a, glm::vec3 d, glm::vec3 s, float alpha)
+    {
         material.k_ambiant = a;
         material.k_diffuse = d;
         material.k_specular = s;
         material.transparency = alpha;
     }
 
-
-    void draw(GLuint programID, bool wired) const {
-        if( triangles.size() == 0 ) return;
+    void draw(GLuint programID, bool wired) const
+    {
+        if (triangles.size() == 0)
+            return;
 
         glUniform3f(glGetUniformLocation(programID, "objectColor"), color[0], color[1], color[2]);
         glUniform3f(glGetUniformLocation(programID, "k_a"), material.k_ambiant[0], material.k_ambiant[1], material.k_ambiant[2]);
@@ -60,54 +62,59 @@ public:
         glEnableVertexAttribArray(0); // layout (location = 0)
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
         glVertexAttribPointer(
-                0,                  // attribute
-                3,                  // size
-                GL_FLOAT,           // type
-                GL_FALSE,           // normalized?
-                0,                  // stride
-                (void*)0            // array buffer offset
+            0,        // attribute
+            3,        // size
+            GL_FLOAT, // type
+            GL_FALSE, // normalized?
+            0,        // stride
+            (void *)0 // array buffer offset
         );
 
         // 2nd attribute buffer: normals
         glEnableVertexAttribArray(1); // layout (location = 1)
         glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
         glVertexAttribPointer(
-            1,                  // attribute
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void*)0            // array buffer offset
+            1,        // attribute
+            3,        // size
+            GL_FLOAT, // type
+            GL_FALSE, // normalized?
+            0,        // stride
+            (void *)0 // array buffer offset
         );
 
         // Index buffer
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
-        if(wired){
-            glPolygonMode (GL_FRONT_AND_BACK, GL_LINE); // displays meshs
-        }else{
-            glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+        if (wired)
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // displays meshs
+        }
+        else
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
 
-        glEnableClientState(GL_VERTEX_ARRAY) ;
-        glEnableClientState (GL_NORMAL_ARRAY);
-        glNormalPointer (GL_FLOAT, 3*sizeof (float), (GLvoid*)(normals.data()));
-        glVertexPointer (3, GL_FLOAT, 3*sizeof (float) , (GLvoid*)(indexed_vertices.data()));
-        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, (void*)0);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glNormalPointer(GL_FLOAT, 3 * sizeof(float), (GLvoid *)(normals.data()));
+        glVertexPointer(3, GL_FLOAT, 3 * sizeof(float), (GLvoid *)(indexed_vertices.data()));
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, (void *)0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(2);
     }
 
-    void generateBuffers(){
+    void generateBuffers()
+    {
         glGenBuffers(1, &vertexbuffer);
         glGenBuffers(1, &normalbuffer);
         glGenBuffers(1, &elementbuffer);
         glGenBuffers(1, &buffer_coord_txt);
     }
 
-    void loadBuffers(){
+    void loadBuffers()
+    {
         // Load data (vertices, meshes, etc.) into VBO's
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
         glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec3), &indexed_vertices[0], GL_STATIC_DRAW);
@@ -118,30 +125,30 @@ public:
 
         // Generate a buffer for the indices
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0] , GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
 
         // fill buffer for texture coordinates
         glBindBuffer(GL_ARRAY_BUFFER, buffer_coord_txt);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat)*2, (void *) 0);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 2, (void *)0);
         glBufferData(GL_ARRAY_BUFFER, coord_texture.size() * sizeof(glm::vec2), &coord_texture[0], GL_STATIC_DRAW);
     }
 
-    void deleteBuffers(){
+    void deleteBuffers()
+    {
         glDeleteBuffers(1, &vertexbuffer);
         glDeleteBuffers(1, &normalbuffer);
         glDeleteBuffers(1, &elementbuffer);
         glDeleteBuffers(1, &buffer_coord_txt);
     }
 
-    void clearVectors(){
+    void clearVectors()
+    {
         indexed_vertices.clear();
         indices.clear();
         triangles.clear();
         normals.clear();
         coord_texture.clear();
     }
-
 };
 
-
-#endif //TP1_CODE_SCENEOBJECT_H
+#endif // TP1_CODE_SCENEOBJECT_H
