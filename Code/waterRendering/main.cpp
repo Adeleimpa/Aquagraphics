@@ -25,6 +25,7 @@ using namespace glm;
 // in order to use stb_image.h and import a png texture image
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
 #include "Plane.h"
 #include "GLTexture.h"
 #include "Texture.h"
@@ -85,6 +86,9 @@ WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
 
 // aquarium
 Aquarium *aquarium = new Aquarium(water->side_len, 2,  glm::vec3(0.0,0.0,0.0));
+
+// textures
+GLTexture *texture = new GLTexture();
 
 // draw wired mesh or not
 bool wired = false;
@@ -190,6 +194,7 @@ int main( void )
     skybox->generatePlanes();
     skybox->setCubeColor(glm::vec3(0.0f, 1.0f, 0.0f));
     skybox->setCubeMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
+    skybox->setIsSkybox(1);
     // ------------------------------------------------------------------------------------
 
 
@@ -231,6 +236,13 @@ int main( void )
     // ------------------------------------------------------------------------------------
 
 
+    // ------------------------------------------------------------------------------------
+    // TEXTURES
+    // ------------------------------------------------------------------------------------
+    texture->generateTexture();
+    texture->loadTexture((char*)"textures/texture.png");
+    texture->defineParameters();
+    // ------------------------------------------------------------------------------------
 
 
     // For speed computation
@@ -272,6 +284,12 @@ int main( void )
 
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){
+
+            if(scene_objects[i]->isSkybox==1){ // skybox
+                // send textures to shader
+                texture->sendTextureToShader(programID, "skybox_txt", 0);
+            }
+
             scene_objects[i]->loadBuffers();
             scene_objects[i]->draw(programID, wired);
         }

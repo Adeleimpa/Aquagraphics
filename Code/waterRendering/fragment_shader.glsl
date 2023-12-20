@@ -5,6 +5,8 @@
 out vec4 FragColor;
 
 in vec2 coord_txt;
+uniform sampler2D skybox_txt;
+uniform int isSkybox;
 
 uniform vec3 objectColor;
 uniform vec3 k_a;
@@ -46,8 +48,13 @@ void main(){
         vec3 result = (ambient + diffuse + specular) * objectColor;
 
 
-        //FragColor = vec4(objectColor, 1.0); // simple color
-        FragColor = vec4(result, transparency); // phong color 
+        if(isSkybox == 1){
+                FragColor = texture(skybox_txt, coord_txt);
+                //FragColor = vec4(objectColor, 0.0); // simple color
+        }else{
+                //FragColor = vec4(objectColor, 0.0); // simple color
+                FragColor = vec4(result, transparency); // phong color 
+        }
 
 
 }

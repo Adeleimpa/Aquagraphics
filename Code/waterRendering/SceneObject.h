@@ -25,6 +25,8 @@ public:
 
     GLuint vertexbuffer, normalbuffer, elementbuffer, buffer_coord_txt;
 
+    bool isSkybox;
+
     glm::vec3 color = glm::vec3(0.0,0.0,0.0); // default value
 
     Material material;
@@ -51,6 +53,8 @@ public:
         glUniform3f(glGetUniformLocation(programID, "k_d"), material.k_diffuse[0], material.k_diffuse[1], material.k_diffuse[2]);
         glUniform3f(glGetUniformLocation(programID, "k_s"), material.k_specular[0], material.k_specular[1], material.k_specular[2]);
         glUniform1f(glGetUniformLocation(programID, "transparency"), material.transparency);
+
+        glUniform1i(glGetUniformLocation(programID, "isSkybox"), isSkybox);
 
         // 1rst attribute buffer : vertices
         glEnableVertexAttribArray(0); // layout (location = 0)

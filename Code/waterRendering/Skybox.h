@@ -75,6 +75,15 @@ public:
         back->setMaterial(a, d, s, alpha);
     }
 
+    void setIsSkybox(int val){
+        top->isSkybox = val;
+        floor->isSkybox = val;
+        left->isSkybox = val;
+        right->isSkybox = val;
+        front->isSkybox = val;
+        back->isSkybox = val;
+    }
+
 
 };
 
