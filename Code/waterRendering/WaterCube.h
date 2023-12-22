@@ -30,6 +30,10 @@ public:
         }
     }
 
+    float getWaterHeight(){
+        return side_len/2.0f;
+    }
+
 private:
 
     int n = 30; // top and floor faces have 30x30x2 triangles
