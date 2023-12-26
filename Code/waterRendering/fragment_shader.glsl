@@ -23,9 +23,6 @@ uniform vec3 I_s;
 // camera position
 uniform vec3 viewPos;
 
-// reflection
-uniform sampler2D reflectionTexture;
-
 in vec3 fragNormal; 
 
 in vec3 FragPos;
@@ -50,17 +47,13 @@ void main(){
         //vec3 result = (ambient + diffuse) * objectColor;
         vec3 result = (ambient + diffuse + specular) * objectColor;
 
-        vec4 reflectionColor = texture(reflectionTexture, coord_txt); // test texture
-
 
         if(isSkybox == 1){
-                FragColor = texture(skybox_txt, coord_txt); // TODO fix
-                //FragColor = vec4(objectColor, 0.0); // simple color
+                //FragColor = texture(skybox_txt, coord_txt); // TODO fix
+                FragColor = vec4(objectColor, 0.0); // simple color
         }else{
                 //FragColor = vec4(objectColor, 0.0); // simple color
                 FragColor = vec4(result, transparency); // phong color 
-                //FragColor = mix(reflectionColor, vec4(result, transparency), 1.0); // test reflection
-                
         }
 
 

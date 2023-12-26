@@ -36,7 +36,6 @@ using namespace glm;
 #include "Aquarium.h"
 #include "Light.h"
 #include "Skybox.h"
-#include "WaterFrameBuffers.h"
 
 GLFWwindow* window;
 
@@ -48,8 +47,9 @@ const unsigned int SCR_HEIGHT = 600;
 
 // camera
 Camera *camera = new Camera();
-glm::vec3 camera_position = glm::vec3(0.0f, 0.0f,  3.0f);
-
+glm::vec3 camera_position   = glm::vec3(0.0f, 0.0f,  3.0f);
+glm::vec3 camera_target = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 camera_up    = glm::vec3(0.0f, 1.0f,  0.0f);
 float angle_in_degrees = 1.;
 bool cameraRotates = false;
 float cameraSpeed;
@@ -71,7 +71,7 @@ float zoom = 1.;
 glm::vec3 light_I_a =glm::vec3(0.8f, 0.8f, 0.8f);
 glm::vec3 light_I_d = glm::vec3(0.8f, 0.8f, 0.8f);
 glm::vec3 light_I_s = glm::vec3(0.9f, 0.9f, 0.9f);
-glm::vec3 light_pos = glm::vec3(0.0f, 7.0f, 1.5f);
+glm::vec3 light_pos = glm::vec3(0.0f, 7.0f, 1.5f); //camera_position;
 glm::vec3 light_color = glm::vec3(1.0f, 1.0f,  1.0f);
 Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color);
 
@@ -92,11 +92,6 @@ GLTexture *texture = new GLTexture();
 
 // draw wired mesh or not
 bool wired = false;
-
-// reflection camera
-Camera *reflection_camera = new Camera();
-glm::vec3 refl_cam_position = glm::vec3(camera_position[0], camera_position[1], camera_position[2]);
-float refl_cam_vertical_angle = 3.14f/4.0f;
 
 
 GLuint programID;
@@ -182,12 +177,6 @@ int main( void )
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
 
-
-    // default to orbital camera
-    setCamPosition(glm::vec3( 0, 5, 5));
-    setVerticalAngle(-3.14f/4.0f);
-
-
     // ------------------------------------------------------------------------------------
     // PLANE
     // ------------------------------------------------------------------------------------
@@ -197,9 +186,7 @@ int main( void )
 
     plane->setColor(glm::vec3(0.5, 0.27, 0.11));
     plane->setMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
-    plane->isSkybox = true; // to test texture
     // ------------------------------------------------------------------------------------
-
 
     // ------------------------------------------------------------------------------------
     // SKYBOX
@@ -219,7 +206,6 @@ int main( void )
     water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f), 0.5);
     // ------------------------------------------------------------------------------------
 
-
     // ------------------------------------------------------------------------------------
     // AQUARIUM
     // ------------------------------------------------------------------------------------
@@ -227,7 +213,6 @@ int main( void )
     aquarium->generatePlanes();
     aquarium->setAquariumMaterial(glm::vec3(0.9f, 0.9f, 0.9f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.9f, 0.9f, 0.9f), 0.2);
     // ------------------------------------------------------------------------------------
-
 
     // ------------------------------------------------------------------------------------
     // Add objects to scene_objects
@@ -260,11 +245,10 @@ int main( void )
     // ------------------------------------------------------------------------------------
 
 
-    // reflection refraction
-    refl_cam_position[1] += 2 * (camera_position[1] - water->getWaterHeight()); // Mirror the y-coordinate
-    //setCamPosition(refl_cam_position);
-    //setVerticalAngle(refl_cam_vertical_angle);
-    //WaterFrameBuffers *water_fbs = new WaterFrameBuffers();
+    // For speed computation
+    double lastTime = glfwGetTime();
+    int nbFrames = 0;
+    double counter_flying = 0.0;
 
     do{
 
@@ -286,50 +270,12 @@ int main( void )
         // Use our shader
         glUseProgram(programID);
 
-        // ---------------
-        // RENDER REFLECTION OFF SCREEN TO MAKE TEXTURE
-        /*water_fbs->bindReflectionFrameBuffer();
-
-        // CAMERA
-        reflection_camera->MVP(cameraRotates, speedUp, slowDown);
-        reflection_camera->sendMVPtoShader(programID);
-        glUniform3f(glGetUniformLocation(programID, "viewPos"), refl_cam_position[0], refl_cam_position[1], refl_cam_position[2]); // todo pas sure
-
-        // Draw the triangles !
-        for(int i = 0; i < scene_objects.size(); i++){
-
-            if(scene_objects[i]->isSkybox==1){ // skybox
-                // send textures to shader
-                texture->sendTextureToShader(programID, "skybox_txt", 0);
-            }
-
-            // todo ne pas render water for relfexion
-
-            scene_objects[i]->loadBuffers();
-            scene_objects[i]->draw(programID, wired);
-        }
-
-        water_fbs->unbindCurrentFrameBuffer();*/
-        // ---------------
-
-        // ---------------
-        // RENDER SCENE AS NORMAL
-
         // CAMERA
         camera->MVP(cameraRotates, speedUp, slowDown);
         speedUp = false;
         slowDown = false;
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
-
-        // Restore default framebuffer and viewport
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-
-        glUseProgram(programID);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, water_fbs->getReflectionTexture()); 
-        glUniform1i(glGetUniformLocation(programID, "reflectionTexture"), 0); 
 
         // animate water
         float amplitude = 0.12f * sin(glfwGetTime());  // Example: amplitude changes over time
@@ -347,8 +293,6 @@ int main( void )
             scene_objects[i]->loadBuffers();
             scene_objects[i]->draw(programID, wired);
         }
-        // ---------------
-
 
         // Swap buffers
         glfwSwapBuffers(window);

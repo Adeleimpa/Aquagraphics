@@ -288,5 +288,4 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: \
  /media/psf/Home/Downloads/Aquagraphics/Code/waterRendering/WaterCube.h \
  /media/psf/Home/Downloads/Aquagraphics/Code/waterRendering/Aquarium.h \
  /media/psf/Home/Downloads/Aquagraphics/Code/waterRendering/Light.h \
- /media/psf/Home/Downloads/Aquagraphics/Code/waterRendering/Skybox.h \
- /media/psf/Home/Downloads/Aquagraphics/Code/waterRendering/WaterFrameBuffers.h
+ /media/psf/Home/Downloads/Aquagraphics/Code/waterRendering/Skybox.h
