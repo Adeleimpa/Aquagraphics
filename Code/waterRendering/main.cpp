@@ -199,6 +199,7 @@ int main( void )
 
     plane->setColor(glm::vec3(0.5, 0.27, 0.11));
     plane->setMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
+    plane->isSkybox = 1; // true to test texture
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
@@ -265,7 +266,7 @@ int main( void )
 
     // RFELECTION, REFRACTION
     //WaterFrameBuffers *water_fbs = new WaterFrameBuffers();
-    //framebuffer_size_callback(window, SCR_WIDTH, SCR_HEIGHT);
+    //framebuffer_size_callback(window, SCR_WIDTH, SCR_HEIGHT); // test
 
     do{
 
