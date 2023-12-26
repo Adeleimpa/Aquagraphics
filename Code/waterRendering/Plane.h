@@ -99,8 +99,6 @@ public:
 
         }else if(xyz == 1){ // y = 0
 
-        std::cout << "y = 0" << std::endl;
-
             glm::vec3 start_corner = top_left;
 
             for(int i = 0; i <= h; i++) {
@@ -112,7 +110,7 @@ public:
                     indexed_vertices.push_back(current_corner);
                     normals.push_back(normal);
 
-                    std::cout << "indexed_vertices: " << current_corner[0] << ", " << current_corner[1] << ", " << current_corner[2] << std::endl;
+                    //std::cout << "indexed_vertices: " << current_corner[0] << ", " << current_corner[1] << ", " << current_corner[2] << std::endl;
                     //std::cout << "coord_texture: " << ct[0] << ", " << ct[1] << std::endl;
                 }
             }
@@ -136,9 +134,9 @@ public:
         coord_texture.push_back(glm::vec2(0.0, 0.0));
         coord_texture.push_back(glm::vec2(1.0, 1.0));
         coord_texture.push_back(glm::vec2(1.0, 0.0));
-        for(glm::vec2 ct : coord_texture){
+        /*for(glm::vec2 ct : coord_texture){
             std::cout << "coord_texture: " << ct[0] << ", " << ct[1] << std::endl;
-        }
+        }*/
         
 
         for(int i = 0; i < h; i++){

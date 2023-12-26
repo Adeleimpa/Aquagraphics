@@ -79,7 +79,7 @@ Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color
 Plane *plane = new Plane(3.0, 3.0, 1, 1, glm::vec3(0.0,-1.01,0.0), 1); // plane in y=0
 
 // skybox
-//Skybox *skybox = new Skybox(glm::vec3(0.0,0.0,0.0), 100.0);
+Skybox *skybox = new Skybox(glm::vec3(0.0,0.0,0.0), 100.0);
 
 // water
 WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
@@ -89,6 +89,8 @@ Aquarium *aquarium = new Aquarium(water->side_len, 2,  glm::vec3(0.0,0.0,0.0));
 
 // textures
 GLTexture *texture = new GLTexture();
+GLTexture *sky_texture = new GLTexture();
+GLTexture *wood_texture = new GLTexture();
 
 // draw wired mesh or not
 bool wired = false;
@@ -194,22 +196,21 @@ int main( void )
     // PLANE
     // ------------------------------------------------------------------------------------
     // generate plane -> fill arrays of indices, triangles and indexed_vertices
-    std::cout << "GENERATE PLANE" << std::endl;
     plane->generatePlane(1.0);
     plane->generateBuffers();
 
     plane->setColor(glm::vec3(0.5, 0.27, 0.11));
     plane->setMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
-    plane->isSkybox = 1; // true to test texture
+    plane->isPlane = 1; // true
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
     // SKYBOX
     // -----------------------------------------------------------------------------------_
-    /*skybox->generatePlanes();
-    skybox->setCubeColor(glm::vec3(0.0f, 0.8f, 0.9f));
+    skybox->generatePlanes();
+    skybox->setCubeColor(glm::vec3(0.9f, 0.9f, 0.9f));
     skybox->setCubeMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
-    skybox->setIsSkybox(1); // true*/
+    skybox->setIsSkybox(1); // true
     // ------------------------------------------------------------------------------------
 
 
@@ -232,12 +233,12 @@ int main( void )
     // ------------------------------------------------------------------------------------
     // Add objects to scene_objects
     // Attention importance de l'ordre pour la transparence
-    /*scene_objects.push_back(skybox->top);
+    scene_objects.push_back(skybox->top);
     scene_objects.push_back(skybox->floor);
     scene_objects.push_back(skybox->left);
     scene_objects.push_back(skybox->right);
     scene_objects.push_back(skybox->back);
-    scene_objects.push_back(skybox->front);*/
+    scene_objects.push_back(skybox->front);
 
     scene_objects.push_back(plane);
 
@@ -256,6 +257,14 @@ int main( void )
     texture->generateTexture();
     texture->loadTexture((char*)"textures/texture.png");
     texture->defineParameters();
+
+    sky_texture->generateTexture();
+    sky_texture->loadTexture((char*)"textures/sky.png");
+    sky_texture->defineParameters();
+
+    wood_texture->generateTexture();
+    wood_texture->loadTexture((char*)"textures/wood.jpg");
+    wood_texture->defineParameters();
     // ------------------------------------------------------------------------------------
 
 
@@ -303,9 +312,11 @@ int main( void )
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){
 
+            // send textures to shader
             if(scene_objects[i]->isSkybox==1){ // skybox
-                // send textures to shader
-                texture->sendTextureToShader(programID, "skybox_txt", 0);
+                sky_texture->sendTextureToShader(programID, "skybox_txt", 0);
+            }else if(scene_objects[i]->isPlane==1){
+                wood_texture->sendTextureToShader(programID, "wood_txt", 0);
             }
 
             scene_objects[i]->loadBuffers();
@@ -347,14 +358,14 @@ void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
 
         if(cameraRotates){
             cameraRotates = false;
-            setCamPosition(glm::vec3( 0, 0.55, 5));
-            setVerticalAngle(0.0f);
-            std::cout << "You have pressed the key C : switch to normal camera" << std::endl;
+            //setCamPosition(glm::vec3( 0, 0.55, 5));
+            //setVerticalAngle(0.0f);
+            std::cout << "You have pressed the key C : rotation stops" << std::endl;
         }else{
             cameraRotates = true;
-            setCamPosition(glm::vec3( 0, 5, 5));
-            setVerticalAngle(-3.14f/4.0f);
-            std::cout << "You have pressed the key C : switch to orbital camera" << std::endl;
+            //setCamPosition(glm::vec3( 0, 5, 5));
+            //setVerticalAngle(-3.14f/4.0f);
+            std::cout << "You have pressed the key C : rotation starts" << std::endl;
         }
 
     }else if( key == GLFW_KEY_SLASH and action == GLFW_PRESS ){ // + on macbook keyboard

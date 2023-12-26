@@ -25,6 +25,7 @@ public:
     GLuint vertexbuffer, normalbuffer, elementbuffer, buffer_coord_txt;
 
     int isSkybox; // 0 = false
+    int isPlane; // 0 = false
 
     glm::vec3 color = glm::vec3(0.0, 0.0, 0.0); // default value
 
@@ -57,6 +58,7 @@ public:
         glUniform1f(glGetUniformLocation(programID, "transparency"), material.transparency);
 
         glUniform1i(glGetUniformLocation(programID, "isSkybox"), isSkybox);
+        glUniform1i(glGetUniformLocation(programID, "isPlane"), isPlane);
 
         // 1rst attribute buffer : vertices
         glEnableVertexAttribArray(0); // layout (location = 0)
