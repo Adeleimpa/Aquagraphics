@@ -1,7 +1,6 @@
 #version 330 core
 
 // Ouput data
-//(out) vec4 color;
 out vec4 FragColor;
 
 in vec2 coord_txt;
@@ -49,8 +48,8 @@ void main(){
 
 
         if(isSkybox == 1){
-                //FragColor = texture(skybox_txt, coord_txt); // TODO fix
-                FragColor = vec4(objectColor, 0.0); // simple color
+                FragColor = texture(skybox_txt, coord_txt) * vec4(objectColor, 0.0);
+                //FragColor = vec4(objectColor, 0.0); // simple color
         }else{
                 //FragColor = vec4(objectColor, 0.0); // simple color
                 FragColor = vec4(result, transparency); // phong color 

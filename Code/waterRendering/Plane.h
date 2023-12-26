@@ -99,15 +99,21 @@ public:
 
         }else if(xyz == 1){ // y = 0
 
+        std::cout << "y = 0" << std::endl;
+
             glm::vec3 start_corner = top_left;
 
             for(int i = 0; i <= h; i++) {
                 for (int j = 0; j <= w; j++) {
                     current_corner = glm::vec3(start_corner[0] + i*step_1, start_corner[1], start_corner[2] + j*step_2);
                     glm::vec3 normal = glm::vec3(0.0, n_orient, 0.0);
-                    //coord_texture.push_back(glm::vec2(current_corner[0]/width, 1.0-current_corner[2]/height));
+                    //glm::vec2 ct = glm::vec2(current_corner[0]/width, 1.0-current_corner[2]/height);
+                    //coord_texture.push_back(ct);
                     indexed_vertices.push_back(current_corner);
                     normals.push_back(normal);
+
+                    std::cout << "indexed_vertices: " << current_corner[0] << ", " << current_corner[1] << ", " << current_corner[2] << std::endl;
+                    //std::cout << "coord_texture: " << ct[0] << ", " << ct[1] << std::endl;
                 }
             }
 
@@ -119,17 +125,21 @@ public:
                 for (int j = 0; j <= w; j++) {
                     current_corner = glm::vec3(start_corner[0] + i*step_1, start_corner[1] + j*step_2, start_corner[2]);
                     glm::vec3 normal = glm::vec3(0.0, 0.0, n_orient);
-                    //coord_texture.push_back(glm::vec2(current_corner[0]/width, 1.0 - current_corner[2]/height));
+                    //coord_texture.push_back(glm::vec2(current_corner[0]/width, 1.0 - current_corner[1]/height));
                     indexed_vertices.push_back(current_corner);
                     normals.push_back(normal);
                 }
             }
         }
 
-        coord_texture.push_back(glm::vec2(0.0, 0.0));
         coord_texture.push_back(glm::vec2(0.0, 1.0));
-        coord_texture.push_back(glm::vec2(1.0, 0.0));
+        coord_texture.push_back(glm::vec2(0.0, 0.0));
         coord_texture.push_back(glm::vec2(1.0, 1.0));
+        coord_texture.push_back(glm::vec2(1.0, 0.0));
+        for(glm::vec2 ct : coord_texture){
+            std::cout << "coord_texture: " << ct[0] << ", " << ct[1] << std::endl;
+        }
+        
 
         for(int i = 0; i < h; i++){
             for(int j = 0; j < w; j++){

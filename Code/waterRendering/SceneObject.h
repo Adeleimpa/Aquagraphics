@@ -82,6 +82,18 @@ public:
             (void *)0 // array buffer offset
         );
 
+        // 3rd attribute buffer: texture coordinates
+        glEnableVertexAttribArray(2); // layout (location = 2)
+        glBindBuffer(GL_ARRAY_BUFFER, buffer_coord_txt);
+        glVertexAttribPointer(
+            2,        // attribute
+            2,        // size
+            GL_FLOAT, // type
+            GL_FALSE, // normalized?
+            sizeof(GLfloat)*2,        // stride // TODO 0 ou sizeof(GLfloat)*2
+            (void *)0 // array buffer offset
+        );
+
         // Index buffer
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
@@ -96,8 +108,12 @@ public:
 
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+        glTexCoordPointer(2, GL_FLOAT, 2 * sizeof(float), (GLvoid *)(coord_texture.data()));
         glNormalPointer(GL_FLOAT, 3 * sizeof(float), (GLvoid *)(normals.data()));
         glVertexPointer(3, GL_FLOAT, 3 * sizeof(float), (GLvoid *)(indexed_vertices.data()));
+
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, (void *)0);
 
         glDisableVertexAttribArray(0);
@@ -129,7 +145,6 @@ public:
 
         // fill buffer for texture coordinates
         glBindBuffer(GL_ARRAY_BUFFER, buffer_coord_txt);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 2, (void *)0);
         glBufferData(GL_ARRAY_BUFFER, coord_texture.size() * sizeof(glm::vec2), &coord_texture[0], GL_STATIC_DRAW);
     }
 
