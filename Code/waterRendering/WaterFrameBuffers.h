@@ -28,8 +28,12 @@ private:
     GLuint refractionTexture;
     GLuint refractionDepthTexture;
 
+    GLuint originalFrameBuffer;
+
 public:
     WaterFrameBuffers() {
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&originalFrameBuffer);
+
         initialiseReflectionFrameBuffer();
         initialiseRefractionFrameBuffer();
     }
@@ -47,7 +51,7 @@ public:
     }
 
     void unbindCurrentFrameBuffer() {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glBindFramebuffer(GL_FRAMEBUFFER, originalFrameBuffer); // todo generates error
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
     }
 

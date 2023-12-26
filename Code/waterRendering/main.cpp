@@ -97,6 +97,15 @@ bool wired = false;
 GLuint programID;
 /*******************************************************************************/
 
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    // make sure the viewport matches the new window dimensions; note that width and
+    // height will be significantly larger than specified on retina displays.
+    glViewport(0, 0, width, height);
+}
+
 
 void enableBlending() {
     glEnable(GL_BLEND);
@@ -254,6 +263,10 @@ int main( void )
     int nbFrames = 0;
     double counter_flying = 0.0;
 
+    // RFELECTION, REFRACTION
+    //WaterFrameBuffers *water_fbs = new WaterFrameBuffers();
+    //framebuffer_size_callback(window, SCR_WIDTH, SCR_HEIGHT);
+
     do{
 
         enableBlending(); // for transparency
@@ -319,15 +332,6 @@ int main( void )
     return 0;
 }
 
-
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    // make sure the viewport matches the new window dimensions; note that width and
-    // height will be significantly larger than specified on retina displays.
-    glViewport(0, 0, width, height);
-}
 
 
 void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
