@@ -1,9 +1,9 @@
 external/glfw-3.1.2/tests/CMakeFiles/windows.dir/windows.c.o: \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/tests/windows.c \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/tests/windows.c \
  /usr/include/stdc-predef.h \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h /usr/include/GL/gl.h \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
  /usr/include/inttypes.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \

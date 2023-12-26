@@ -1387,7 +1387,8 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
   ../waterRendering/WaterCube.h \
   ../waterRendering/Aquarium.h \
   ../waterRendering/Light.h \
-  ../waterRendering/Skybox.h
+  ../waterRendering/Skybox.h \
+  ../waterRendering/WaterFrameBuffers.h
 
 
 ../waterRendering/Light.h:
@@ -1745,6 +1746,8 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: ../waterRendering/main.
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
 
 /usr/include/c++/11/cwchar:
+
+../waterRendering/WaterFrameBuffers.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 

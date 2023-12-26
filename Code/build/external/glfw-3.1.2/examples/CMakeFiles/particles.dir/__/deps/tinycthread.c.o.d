@@ -1,7 +1,7 @@
 external/glfw-3.1.2/examples/CMakeFiles/particles.dir/__/deps/tinycthread.c.o: \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/tinycthread.c \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/tinycthread.c \
  /usr/include/stdc-predef.h \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/tinycthread.h \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/tinycthread.h \
  /usr/include/time.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \

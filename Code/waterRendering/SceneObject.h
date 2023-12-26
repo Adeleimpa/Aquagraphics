@@ -24,7 +24,7 @@ public:
     // ids of frame buffer objects
     GLuint vertexbuffer, normalbuffer, elementbuffer, buffer_coord_txt;
 
-    bool isSkybox;
+    int isSkybox; // 0 = false
 
     glm::vec3 color = glm::vec3(0.0, 0.0, 0.0); // default value
 

@@ -36,6 +36,7 @@ using namespace glm;
 #include "Aquarium.h"
 #include "Light.h"
 #include "Skybox.h"
+#include "WaterFrameBuffers.h"
 
 GLFWwindow* window;
 
@@ -48,8 +49,7 @@ const unsigned int SCR_HEIGHT = 600;
 // camera
 Camera *camera = new Camera();
 glm::vec3 camera_position   = glm::vec3(0.0f, 0.0f,  3.0f);
-glm::vec3 camera_target = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 camera_up    = glm::vec3(0.0f, 1.0f,  0.0f);
+
 float angle_in_degrees = 1.;
 bool cameraRotates = false;
 float cameraSpeed;
@@ -71,7 +71,7 @@ float zoom = 1.;
 glm::vec3 light_I_a =glm::vec3(0.8f, 0.8f, 0.8f);
 glm::vec3 light_I_d = glm::vec3(0.8f, 0.8f, 0.8f);
 glm::vec3 light_I_s = glm::vec3(0.9f, 0.9f, 0.9f);
-glm::vec3 light_pos = glm::vec3(0.0f, 7.0f, 1.5f); //camera_position;
+glm::vec3 light_pos = glm::vec3(0.0f, 7.0f, 1.5f);
 glm::vec3 light_color = glm::vec3(1.0f, 1.0f,  1.0f);
 Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color);
 
@@ -177,6 +177,10 @@ int main( void )
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
 
+    // default to orbital camera
+    setCamPosition(glm::vec3( 0, 5, 5));
+    setVerticalAngle(-3.14f/4.0f);
+
     // ------------------------------------------------------------------------------------
     // PLANE
     // ------------------------------------------------------------------------------------
@@ -194,7 +198,7 @@ int main( void )
     skybox->generatePlanes();
     skybox->setCubeColor(glm::vec3(0.0f, 0.8f, 0.9f));
     skybox->setCubeMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
-    skybox->setIsSkybox(1);
+    skybox->setIsSkybox(1); // true
     // ------------------------------------------------------------------------------------
 
 

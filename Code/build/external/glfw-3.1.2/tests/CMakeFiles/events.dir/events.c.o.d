@@ -1,9 +1,9 @@
 external/glfw-3.1.2/tests/CMakeFiles/events.dir/events.c.o: \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/tests/events.c \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/tests/events.c \
  /usr/include/stdc-predef.h \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/include/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h /usr/include/GL/gl.h \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/GL/glext.h \
  /usr/include/inttypes.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -58,4 +58,4 @@ external/glfw-3.1.2/tests/CMakeFiles/events.dir/events.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/string.h /usr/include/strings.h /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h \
- /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/getopt.h
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/deps/getopt.h

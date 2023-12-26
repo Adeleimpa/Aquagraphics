@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /media/psf/Home/Downloads/Aquagraphics/Code
+CMAKE_SOURCE_DIR = "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /media/psf/Home/Downloads/Aquagraphics/Code/build
+CMAKE_BINARY_DIR = "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/build"
 
 # Utility rule file for uninstall.
 
@@ -67,7 +67,7 @@ include external/glfw-3.1.2/CMakeFiles/uninstall.dir/compiler_depend.make
 include external/glfw-3.1.2/CMakeFiles/uninstall.dir/progress.make
 
 external/glfw-3.1.2/CMakeFiles/uninstall:
-	cd /media/psf/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2 && /usr/bin/cmake -P /media/psf/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2/cmake_uninstall.cmake
+	cd "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2" && /usr/bin/cmake -P /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2/cmake_uninstall.cmake
 
 uninstall: external/glfw-3.1.2/CMakeFiles/uninstall
 uninstall: external/glfw-3.1.2/CMakeFiles/uninstall.dir/build.make
@@ -78,10 +78,10 @@ external/glfw-3.1.2/CMakeFiles/uninstall.dir/build: uninstall
 .PHONY : external/glfw-3.1.2/CMakeFiles/uninstall.dir/build
 
 external/glfw-3.1.2/CMakeFiles/uninstall.dir/clean:
-	cd /media/psf/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2 && $(CMAKE_COMMAND) -P CMakeFiles/uninstall.dir/cmake_clean.cmake
+	cd "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2" && $(CMAKE_COMMAND) -P CMakeFiles/uninstall.dir/cmake_clean.cmake
 .PHONY : external/glfw-3.1.2/CMakeFiles/uninstall.dir/clean
 
 external/glfw-3.1.2/CMakeFiles/uninstall.dir/depend:
-	cd /media/psf/Home/Downloads/Aquagraphics/Code/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /media/psf/Home/Downloads/Aquagraphics/Code /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2 /media/psf/Home/Downloads/Aquagraphics/Code/build /media/psf/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2 /media/psf/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code" "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2" "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/build" "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2" "/home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/build/external/glfw-3.1.2/CMakeFiles/uninstall.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : external/glfw-3.1.2/CMakeFiles/uninstall.dir/depend
 

@@ -1,4 +1,4 @@
-# Install script for directory: /media/psf/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/tests
+# Install script for directory: /home/parallels/Desktop/Parallels Shared Folders/Home/Downloads/Aquagraphics/Code/external/glfw-3.1.2/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
