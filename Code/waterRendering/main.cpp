@@ -327,14 +327,11 @@ int main( void )
         glUseProgram(programID);
 
         // CAMERA
-        camera->MVP(cameraRotates, speedUp, slowDown);
-        speedUp = false;
-        slowDown = false;
-        camera->sendMVPtoShader(programID);
-        glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
-        /*reflection_camera->MVP(cameraRotates, speedUp, slowDown);
+        //setCamPosition(glm::vec3( 0.0, -3.0, 5.0));
+        setCamPosition(refl_cam_position);
+        setVerticalAngle(refl_cam_vertical_angle);
+        reflection_camera->MVP(cameraRotates, speedUp, slowDown);
         reflection_camera->sendMVPtoShader(programID);
-        glUniform3f(glGetUniformLocation(programID, "viewPos"), refl_cam_position[0], refl_cam_position[1], refl_cam_position[2]); // todo pas sure*/
 
         // animate water
         float amplitude = 0.12f * sin(glfwGetTime());  // Example: amplitude changes over time
@@ -371,9 +368,9 @@ int main( void )
         glUseProgram(programID);
 
         // CAMERA
+        setCamPosition(glm::vec3( 0, 5, 5));
+        setVerticalAngle(-3.14f/4.0f);
         camera->MVP(cameraRotates, speedUp, slowDown);
-        speedUp = false;
-        slowDown = false;
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
 
