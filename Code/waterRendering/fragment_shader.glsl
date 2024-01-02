@@ -64,7 +64,7 @@ void main(){
                 vec3 upDirection = vec3(0.0, 1.0, 0.0); // drirection points to top
     
                 if (normalize(fragNormal) == upDirection) { // if normal points to top
-                        FragColor = texture(reflectionTexture, coord_txt) * vec4(0.9, 0.9, 0.9, 0.0); // apply texture
+                        FragColor = texture(reflectionTexture, coord_txt) * vec4(1.0, 1.0, 1.0, 0.1); // apply texture
                 } else {
                         FragColor = vec4(result, transparency); // Apply object color
                 }

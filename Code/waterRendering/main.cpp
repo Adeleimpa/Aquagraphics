@@ -223,7 +223,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     water->generateBuffers();
     water->setColor(glm::vec3(0.67, 0.84, 0.9));
-    water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f), 0.5);
+    water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f), 0.7);
     water->isWater = 1; // true
     // ------------------------------------------------------------------------------------
 
@@ -237,7 +237,7 @@ int main( void )
 
     // ------------------------------------------------------------------------------------
     // Add objects to scene_objects
-    // Attention importance de l'ordre pour la transparence
+    // Attention order matters for transparency
     scene_objects.push_back(skybox->top);
     scene_objects.push_back(skybox->floor);
     scene_objects.push_back(skybox->left);
