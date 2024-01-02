@@ -36,7 +36,6 @@ using namespace glm;
 #include "Aquarium.h"
 #include "Light.h"
 #include "Skybox.h"
-//#include "WaterFrameBuffers.h"
 
 GLFWwindow* window;
 
@@ -384,13 +383,7 @@ int main( void )
             if(scene_objects[i]->isSkybox==1){ // skybox
                 sky_texture->sendTextureToShader(programID, "skybox_txt", 0);
             }else if(scene_objects[i]->isPlane==1){
-
-                // REFLECTION
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D , reflectionTexture);
-                glUniform1i(reflectionTextureLocation, 0);
-
-                //wood_texture->sendTextureToShader(programID, "wood_txt", 0);
+                wood_texture->sendTextureToShader(programID, "wood_txt", 0);
             }else if(scene_objects[i]->isWater==1){
             
                 // REFLECTION

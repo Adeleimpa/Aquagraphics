@@ -348,9 +348,11 @@ private:
 
         //std::cout << "Triangles constructed" << std::endl;
 
-        // TODO set texture coordinate (if needed)
-        for (int i = 0; i < indexed_vertices.size(); ++i) {
-            coord_texture.emplace_back(0.0f, 0.0f);
+        // set texture coordinate (top face only)
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= n; j++) {
+                coord_texture.emplace_back((float)j/nf, 1.0f - (float)i/nf);
+            }
         }
         //std::cout << "Textures done" << std::endl;
 

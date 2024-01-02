@@ -56,13 +56,18 @@ void main(){
         if(isSkybox == 1){
                 FragColor = texture(skybox_txt, coord_txt) * vec4(objectColor, 0.0);
 
-        }else if (isPlane ==  1){
-                //FragColor = texture(wood_txt, coord_txt) * vec4(objectColor, 0.0);
-                FragColor = texture(reflectionTexture, coord_txt) * vec4(0.9, 0.9, 0.9, 0.0); // test reflection
-
-        }else if (isWater ==  1){
-                FragColor = vec4(result, transparency); // phong color 
+        }else if (isPlane == 1){
+                FragColor = texture(wood_txt, coord_txt) * vec4(objectColor, 0.0);
                 //FragColor = texture(reflectionTexture, coord_txt) * vec4(0.9, 0.9, 0.9, 0.0); // test reflection
+
+        }else if (isWater == 1){
+                vec3 upDirection = vec3(0.0, 1.0, 0.0); // drirection points to top
+    
+                if (normalize(fragNormal) == upDirection) { // if normal points to top
+                        FragColor = texture(reflectionTexture, coord_txt) * vec4(0.9, 0.9, 0.9, 0.0); // apply texture
+                } else {
+                        FragColor = vec4(result, transparency); // Apply object color
+                }
 
         }else{
                 //FragColor = vec4(objectColor, 0.0); // simple color
