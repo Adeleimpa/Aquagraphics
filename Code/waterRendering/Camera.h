@@ -8,6 +8,7 @@
 #define PI 3.14159265
 
 // TODO rename class
+// MVP class kinda
 class Camera {
 
 private:

@@ -48,6 +48,14 @@ glm::vec3 getCamPosition(){
     return position;
 }
 
+float getHorizontalAngle(){
+    return horizontalAngle;
+}
+
+float getVerticalAngle(){
+    return verticalAngle;
+}
+
 
 void computeMatricesFromInputs() {
 
