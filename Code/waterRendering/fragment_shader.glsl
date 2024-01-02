@@ -28,8 +28,9 @@ in vec3 fragNormal;
 
 in vec3 FragPos;
 
-// refelction
+// reflection
 uniform sampler2D reflectionTexture;
+uniform int isWater;
 
 void main(){
 
@@ -58,6 +59,10 @@ void main(){
         }else if (isPlane ==  1){
                 //FragColor = texture(wood_txt, coord_txt) * vec4(objectColor, 0.0);
                 FragColor = texture(reflectionTexture, coord_txt) * vec4(0.9, 0.9, 0.9, 0.0); // test reflection
+
+        }else if (isWater ==  1){
+                FragColor = vec4(result, transparency); // phong color 
+                //FragColor = texture(reflectionTexture, coord_txt) * vec4(0.9, 0.9, 0.9, 0.0); // test reflection
 
         }else{
                 //FragColor = vec4(objectColor, 0.0); // simple color

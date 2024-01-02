@@ -60,6 +60,7 @@ public:
 
         glUniform1i(glGetUniformLocation(programID, "isSkybox"), isSkybox);
         glUniform1i(glGetUniformLocation(programID, "isPlane"), isPlane);
+        glUniform1i(glGetUniformLocation(programID, "isWater"), isWater);
 
         // 1rst attribute buffer : vertices
         glEnableVertexAttribArray(0); // layout (location = 0)
