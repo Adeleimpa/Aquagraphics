@@ -28,6 +28,9 @@ in vec3 fragNormal;
 
 in vec3 FragPos;
 
+// refelction
+uniform sampler2D reflectionTexture;
+
 void main(){
 
         // light calculations
@@ -53,7 +56,8 @@ void main(){
                 FragColor = texture(skybox_txt, coord_txt) * vec4(objectColor, 0.0);
 
         }else if (isPlane ==  1){
-                FragColor = texture(wood_txt, coord_txt) * vec4(objectColor, 0.0);
+                //FragColor = texture(wood_txt, coord_txt) * vec4(objectColor, 0.0);
+                FragColor = texture(reflectionTexture, coord_txt) * vec4(0.9, 0.9, 0.9, 0.0); // test reflection
 
         }else{
                 //FragColor = vec4(objectColor, 0.0); // simple color

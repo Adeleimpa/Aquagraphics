@@ -12,13 +12,8 @@
 class WaterFrameBuffers {
 
 private:
-    const unsigned int SCR_WIDTH = 800;
-    const unsigned int SCR_HEIGHT = 600;
-
-    const int REFLECTION_WIDTH = 800;
-    const int REFLECTION_HEIGHT = 600;
-    const int REFRACTION_WIDTH = 800;
-    const int REFRACTION_HEIGHT = 600;
+    const int SCR_WIDTH = 800;
+    const int SCR_HEIGHT = 600;
 
     GLuint reflectionFrameBuffer;
     GLuint reflectionTexture;
@@ -43,11 +38,11 @@ public:
     }
 
     void bindReflectionFrameBuffer() {
-        bindFrameBuffer(reflectionFrameBuffer, REFLECTION_WIDTH, REFLECTION_HEIGHT);
+        bindFrameBuffer(reflectionFrameBuffer, SCR_WIDTH, SCR_HEIGHT);
     }
 
     void bindRefractionFrameBuffer() {
-        bindFrameBuffer(refractionFrameBuffer, REFRACTION_WIDTH, REFRACTION_HEIGHT);
+        bindFrameBuffer(refractionFrameBuffer, SCR_WIDTH, SCR_HEIGHT);
     }
 
     void unbindCurrentFrameBuffer() {
@@ -70,15 +65,15 @@ public:
 private:
     void initialiseReflectionFrameBuffer() {
         reflectionFrameBuffer = createFrameBuffer();
-        reflectionTexture = createTextureAttachment(REFLECTION_WIDTH, REFLECTION_HEIGHT);
-        reflectionDepthBuffer = createDepthBufferAttachment(REFLECTION_WIDTH, REFLECTION_HEIGHT);
+        reflectionTexture = createTextureAttachment(SCR_WIDTH, SCR_HEIGHT);
+        reflectionDepthBuffer = createDepthBufferAttachment(SCR_WIDTH, SCR_HEIGHT);
         unbindCurrentFrameBuffer();
     }
 
     void initialiseRefractionFrameBuffer() {
         refractionFrameBuffer = createFrameBuffer();
-        refractionTexture = createTextureAttachment(REFRACTION_WIDTH, REFRACTION_HEIGHT);
-        refractionDepthTexture = createDepthTextureAttachment(REFRACTION_WIDTH, REFRACTION_HEIGHT);
+        refractionTexture = createTextureAttachment(SCR_WIDTH, SCR_HEIGHT);
+        refractionDepthTexture = createDepthTextureAttachment(SCR_WIDTH, SCR_HEIGHT);
         unbindCurrentFrameBuffer();
     }
 
@@ -92,7 +87,7 @@ private:
         GLuint frameBuffer;
         glGenFramebuffers(1, &frameBuffer);
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-        glDrawBuffer(GL_COLOR_ATTACHMENT0);
+        glDrawBuffer(GL_COLOR_ATTACHMENT0); // for off-screen rendering, specifies the color attachement where the renderering is written
         return frameBuffer;
     }
 

@@ -36,7 +36,7 @@ using namespace glm;
 #include "Aquarium.h"
 #include "Light.h"
 #include "Skybox.h"
-#include "WaterFrameBuffers.h"
+//#include "WaterFrameBuffers.h"
 
 GLFWwindow* window;
 
@@ -55,6 +55,11 @@ bool cameraRotates = false;
 float cameraSpeed;
 bool speedUp = false;
 bool slowDown = false;
+
+// reflection camera
+Camera *reflection_camera = new Camera();
+glm::vec3 refl_cam_position = glm::vec3(camera_position[0], camera_position[1], camera_position[2]);
+float refl_cam_vertical_angle = 3.14f/4.0f;
 
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
@@ -220,6 +225,7 @@ int main( void )
     water->generateBuffers();
     water->setColor(glm::vec3(0.67, 0.84, 0.9));
     water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f), 0.5);
+    water->isWater = 1; // true
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
@@ -273,11 +279,34 @@ int main( void )
     int nbFrames = 0;
     double counter_flying = 0.0;
 
-    // RFELECTION, REFRACTION
-    //WaterFrameBuffers *water_fbs = new WaterFrameBuffers();
-    //framebuffer_size_callback(window, SCR_WIDTH, SCR_HEIGHT); // test
+    // REFLECTION
+    GLuint reflectionFBO;
+    glGenFramebuffers(1, &reflectionFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, reflectionFBO);
+    //----
+    GLuint reflectionTexture;
+    glGenTextures(1, &reflectionTexture);
+    glBindTexture(GL_TEXTURE_2D, reflectionTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, reflectionTexture, 0);
+    //----
+    GLuint depthBuffer;
+    glGenRenderbuffers(1, &depthBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, SCR_WIDTH, SCR_HEIGHT);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
+    //---
+    glEnable(GL_DEPTH_TEST);
+    //---
+    GLint reflectionTextureLocation = glGetUniformLocation(programID, "reflectionTexture");
+
 
     do{
+
+        // REFLECTION
+        glBindFramebuffer(GL_FRAMEBUFFER, reflectionFBO);
 
         enableBlending(); // for transparency
 
@@ -303,6 +332,9 @@ int main( void )
         slowDown = false;
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
+        /*reflection_camera->MVP(cameraRotates, speedUp, slowDown);
+        reflection_camera->sendMVPtoShader(programID);
+        glUniform3f(glGetUniformLocation(programID, "viewPos"), refl_cam_position[0], refl_cam_position[1], refl_cam_position[2]); // todo pas sure*/
 
         // animate water
         float amplitude = 0.12f * sin(glfwGetTime());  // Example: amplitude changes over time
@@ -313,15 +345,68 @@ int main( void )
         for(int i = 0; i < scene_objects.size(); i++){
 
             // send textures to shader
-            if(scene_objects[i]->isSkybox==1){ // skybox
+            if(scene_objects[i]->isSkybox==1){
                 sky_texture->sendTextureToShader(programID, "skybox_txt", 0);
             }else if(scene_objects[i]->isPlane==1){
                 wood_texture->sendTextureToShader(programID, "wood_txt", 0);
+            }
+            
+            if(scene_objects[i]->isWater==0){ // do not render water for reflection
+                scene_objects[i]->loadBuffers();
+                scene_objects[i]->draw(programID, wired);
+            }
+        }
+
+        // REFLECTION
+        glBindFramebuffer(GL_FRAMEBUFFER,0);
+
+        // --------------------------------------------------
+        // Clear the screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // send light data to shaders
+        light->sendDataToShaders(programID);
+
+        // Use our shader
+        glUseProgram(programID);
+
+        // CAMERA
+        camera->MVP(cameraRotates, speedUp, slowDown);
+        speedUp = false;
+        slowDown = false;
+        camera->sendMVPtoShader(programID);
+        glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
+
+        // animate water
+        water->animateWater(amplitude, frequency, currentFrame);
+
+        // Draw the triangles !
+        for(int i = 0; i < scene_objects.size(); i++){
+
+            // send textures to shader
+            if(scene_objects[i]->isSkybox==1){ // skybox
+                sky_texture->sendTextureToShader(programID, "skybox_txt", 0);
+            }else if(scene_objects[i]->isPlane==1){
+
+                // REFLECTION
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D , reflectionTexture);
+                glUniform1i(reflectionTextureLocation, 0);
+
+                //wood_texture->sendTextureToShader(programID, "wood_txt", 0);
+            }else if(scene_objects[i]->isWater==1){
+            
+                // REFLECTION
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D , reflectionTexture);
+                glUniform1i(reflectionTextureLocation, 0);
             }
 
             scene_objects[i]->loadBuffers();
             scene_objects[i]->draw(programID, wired);
         }
+        // --------------------------------------------------
+
 
         // Swap buffers
         glfwSwapBuffers(window);

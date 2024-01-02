@@ -288,5 +288,4 @@ CMakeFiles/waterRendering.dir/waterRendering/main.cpp.o: \
  /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/waterRendering/WaterCube.h \
  /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/waterRendering/Aquarium.h \
  /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/waterRendering/Light.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/waterRendering/Skybox.h \
- /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/waterRendering/WaterFrameBuffers.h
+ /home/parallels/Desktop/Parallels\ Shared\ Folders/Home/Downloads/Aquagraphics/Code/waterRendering/Skybox.h

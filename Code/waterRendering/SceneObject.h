@@ -26,6 +26,7 @@ public:
 
     int isSkybox; // 0 = false
     int isPlane; // 0 = false
+    int isWater; // 0 = false
 
     glm::vec3 color = glm::vec3(0.0, 0.0, 0.0); // default value
 
