@@ -24,9 +24,10 @@ public:
     // ids of frame buffer objects
     GLuint vertexbuffer, normalbuffer, elementbuffer, buffer_coord_txt;
 
-    int isSkybox; // 0 = false
-    int isPlane; // 0 = false
-    int isWater; // 0 = false
+    // default value => 0 = false
+    int isSkybox;
+    int isPlane;
+    int isWater;
 
     glm::vec3 color = glm::vec3(0.0, 0.0, 0.0); // default value
 

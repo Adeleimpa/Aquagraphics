@@ -59,6 +59,7 @@ bool slowDown = false;
 Camera *reflection_camera = new Camera();
 glm::vec3 refl_cam_position = glm::vec3(camera_position[0], camera_position[1], camera_position[2]);
 float refl_cam_vertical_angle = 3.14f/4.0f;
+float refl_cam_horizontal_angle;
 
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
@@ -325,10 +326,13 @@ int main( void )
         // Use our shader
         glUseProgram(programID);
 
-        // CAMERA
-        //setCamPosition(glm::vec3( 0.0, -3.0, 5.0));
+        // RELFECTION CAMERA
+        refl_cam_position = getCamPosition();
+        camera_position = getCamPosition();
+        refl_cam_position[1] -= 1.7 * (abs(refl_cam_position[1] - (water->side_len/2.0f)));
         setCamPosition(refl_cam_position);
-        setVerticalAngle(refl_cam_vertical_angle);
+        setVerticalAngle(-getVerticalAngle()); // invert
+        setHorizontalAngle(-getHorizontalAngle()); // invert
         reflection_camera->MVP(cameraRotates, speedUp, slowDown);
         reflection_camera->sendMVPtoShader(programID);
 
@@ -367,8 +371,9 @@ int main( void )
         glUseProgram(programID);
 
         // CAMERA
-        setCamPosition(glm::vec3( 0, 5, 5));
-        setVerticalAngle(-3.14f/4.0f);
+        setCamPosition(camera_position);
+        setVerticalAngle(-getVerticalAngle()); // invert
+        setHorizontalAngle(-getHorizontalAngle()); // invert
         camera->MVP(cameraRotates, speedUp, slowDown);
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
@@ -385,7 +390,6 @@ int main( void )
             }else if(scene_objects[i]->isPlane==1){
                 wood_texture->sendTextureToShader(programID, "wood_txt", 0);
             }else if(scene_objects[i]->isWater==1){
-            
                 // REFLECTION
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D , reflectionTexture);

@@ -29,7 +29,7 @@ float verticalAngle = 0.0f ;
 // Initial Field of View
 float initialFoV = 45.0f;
 
-float speed = 1.0f; // 3 units / second
+float speed = 2.2f; // 3 units / second
 float mouseSpeed = 0.00005f;
 
 void setCamPosition(glm::vec3 new_pos){
