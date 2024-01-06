@@ -58,8 +58,12 @@ bool slowDown = false;
 // reflection camera
 Camera *reflection_camera = new Camera();
 glm::vec3 refl_cam_position = glm::vec3(camera_position[0], camera_position[1], camera_position[2]);
-float refl_cam_vertical_angle = 3.14f/4.0f;
-float refl_cam_horizontal_angle;
+//float refl_cam_vertical_angle = 3.14f/4.0f;
+//float refl_cam_horizontal_angle;
+
+// refraction camera
+Camera *refraction_camera = new Camera();
+glm::vec3 refr_cam_position = glm::vec3(camera_position[0], camera_position[1], camera_position[2]);
 
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
@@ -81,7 +85,7 @@ glm::vec3 light_color = glm::vec3(1.0f, 1.0f,  1.0f);
 Light *light = new Light(light_I_a, light_I_d, light_I_s, light_pos, light_color);
 
 // plane to put the aquarium on top of it
-Plane *plane = new Plane(3.0, 3.0, 1, 1, glm::vec3(0.0,-1.01,0.0), 1); // plane in y=0
+Plane *plane = new Plane(10.0, 10.0, 1, 1, glm::vec3(0.0,-1.01,0.0), 1); // plane in y=0
 
 // skybox
 Skybox *skybox = new Skybox(glm::vec3(0.0,0.0,0.0), 100.0);
@@ -269,7 +273,7 @@ int main( void )
     sky_texture->defineParameters();
 
     wood_texture->generateTexture();
-    wood_texture->loadTexture((char*)"textures/wood.jpg");
+    wood_texture->loadTexture((char*)"textures/texture.png");
     wood_texture->defineParameters();
     // ------------------------------------------------------------------------------------
 
@@ -278,6 +282,7 @@ int main( void )
     double lastTime = glfwGetTime();
     int nbFrames = 0;
     double counter_flying = 0.0;
+
 
     // REFLECTION
     GLuint reflectionFBO;
@@ -294,20 +299,40 @@ int main( void )
     //---
     GLint reflectionTextureLocation = glGetUniformLocation(programID, "reflectionTexture");
 
+    // REFRACTION
+    GLuint refractionFBO;
+    glGenFramebuffers(1, &refractionFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, refractionFBO);
+    //----
+    /*GLTexture *refrTxt = new GLTexture();
+    refrTxt->generateTexture();
+    refrTxt->loadTexture((char*)"textures/sky.png");
+    refrTxt->defineParameters();*/
+    GLuint refractionTexture;
+    glGenTextures(1, &refractionTexture);
+    glBindTexture(GL_TEXTURE_2D, refractionTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, refractionTexture, 0);
+    //---
+    GLint refractionTextureLocation = glGetUniformLocation(programID, "refractionTexture");
+
+
 
     do{
-
-        // REFLECTION
-        glBindFramebuffer(GL_FRAMEBUFFER, reflectionFBO);
-
         enableBlending(); // for transparency
 
         // Measure speed
         // per-frame time logic
-        // --------------------
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        // REFLECTION -----------------------------------------------------------------------------
+        glBindFramebuffer(GL_FRAMEBUFFER, reflectionFBO);
+        glBindTexture(GL_TEXTURE_2D, reflectionTexture);
+
 
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -318,13 +343,16 @@ int main( void )
         // Use our shader
         glUseProgram(programID);
 
-        // RELFECTION CAMERA
-        refl_cam_position = getCamPosition();
+        // save cam position
+        refr_cam_position = getCamPosition();
         camera_position = getCamPosition();
+
+        // REFLECTION CAMERA
+        refl_cam_position = getCamPosition();
         refl_cam_position[1] -= 1.7 * (abs(refl_cam_position[1] - (water->side_len/2.0f)));
         setCamPosition(refl_cam_position);
-        setVerticalAngle(-getVerticalAngle()); // invert
-        setHorizontalAngle(-getHorizontalAngle()); // invert
+        //setVerticalAngle(-getVerticalAngle()); // invert
+        //setHorizontalAngle(-getHorizontalAngle()); // invert
         reflection_camera->MVP(cameraRotates, speedUp, slowDown);
         reflection_camera->sendMVPtoShader(programID);
 
@@ -349,10 +377,51 @@ int main( void )
             }
         }
 
-        // REFLECTION
+        // REFRACTION --------------------------------------------------------------------------------
+        glBindFramebuffer(GL_FRAMEBUFFER, refractionFBO);
+        glBindTexture(GL_TEXTURE_2D, refractionTexture);
+
+        // Clear the screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // send light data to shaders
+        light->sendDataToShaders(programID);
+
+        // Use our shader
+        glUseProgram(programID);
+
+        // REFRACTION CAMERA
+        refr_cam_position[1] -= 2.0;
+        setCamPosition(refr_cam_position);
+        //setVerticalAngle(-getVerticalAngle()); // invert
+        //setHorizontalAngle(-getHorizontalAngle()); // invert
+        refraction_camera->MVP(cameraRotates, speedUp, slowDown);
+        refraction_camera->sendMVPtoShader(programID);
+
+        // animate water
+        water->animateWater(amplitude, frequency, currentFrame);
+
+        // Draw the triangles !
+        for(int i = 0; i < scene_objects.size(); i++){
+
+            // send textures to shader
+            if(scene_objects[i]->isSkybox==1){
+                sky_texture->sendTextureToShader(programID, "skybox_txt", 0);
+            }else if(scene_objects[i]->isPlane==1){
+                wood_texture->sendTextureToShader(programID, "wood_txt", 0);
+            }
+            
+            if(scene_objects[i]->isSkybox==1 || scene_objects[i]->isPlane==1){ // do not render water nor aquarium for refraction
+                scene_objects[i]->loadBuffers();
+                scene_objects[i]->draw(programID, wired);
+            }
+        }
+
+
+        // ------------------------------------------------------------------------------------------------------
+        // switch to default buffer
         glBindFramebuffer(GL_FRAMEBUFFER,0);
 
-        // --------------------------------------------------
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -364,8 +433,8 @@ int main( void )
 
         // CAMERA
         setCamPosition(camera_position);
-        setVerticalAngle(-getVerticalAngle()); // invert
-        setHorizontalAngle(-getHorizontalAngle()); // invert
+        //setVerticalAngle(-getVerticalAngle()); // invert
+        //setHorizontalAngle(-getHorizontalAngle()); // invert
         camera->MVP(cameraRotates, speedUp, slowDown);
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
@@ -382,16 +451,22 @@ int main( void )
             }else if(scene_objects[i]->isPlane==1){
                 wood_texture->sendTextureToShader(programID, "wood_txt", 0);
             }else if(scene_objects[i]->isWater==1){
+
                 // REFLECTION
-                glActiveTexture(GL_TEXTURE0);
+                glActiveTexture(GL_TEXTURE1);
                 glBindTexture(GL_TEXTURE_2D , reflectionTexture);
-                glUniform1i(reflectionTextureLocation, 0);
+                glUniform1i(reflectionTextureLocation, 1);
+
+                // REFRACTION
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D , refractionTexture);
+                glUniform1i(refractionTextureLocation, 0);
             }
 
             scene_objects[i]->loadBuffers();
             scene_objects[i]->draw(programID, wired);
         }
-        // --------------------------------------------------
+        // -----------------------------------------------------------------------------------------------------
 
 
         // Swap buffers
@@ -408,6 +483,10 @@ int main( void )
     }
     glDeleteProgram(programID);
     glDeleteVertexArrays(1, &VertexArrayID);
+    glDeleteBuffers(1, &reflectionFBO);
+    glDeleteBuffers(1, &refractionFBO);
+    glDeleteTextures(1, &reflectionTexture);
+    glDeleteTextures(1, &refractionTexture);
 
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
