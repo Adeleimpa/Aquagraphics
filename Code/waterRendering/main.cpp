@@ -273,7 +273,7 @@ int main( void )
     sky_texture->defineParameters();
 
     wood_texture->generateTexture();
-    wood_texture->loadTexture((char*)"textures/texture.png");
+    wood_texture->loadTexture((char*)"textures/wood.jpg");
     wood_texture->defineParameters();
     // ------------------------------------------------------------------------------------
 
@@ -304,10 +304,6 @@ int main( void )
     glGenFramebuffers(1, &refractionFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, refractionFBO);
     //----
-    /*GLTexture *refrTxt = new GLTexture();
-    refrTxt->generateTexture();
-    refrTxt->loadTexture((char*)"textures/sky.png");
-    refrTxt->defineParameters();*/
     GLuint refractionTexture;
     glGenTextures(1, &refractionTexture);
     glBindTexture(GL_TEXTURE_2D, refractionTexture);
@@ -453,14 +449,14 @@ int main( void )
             }else if(scene_objects[i]->isWater==1){
 
                 // REFLECTION
-                glActiveTexture(GL_TEXTURE1);
+                glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D , reflectionTexture);
-                glUniform1i(reflectionTextureLocation, 1);
+                glUniform1i(reflectionTextureLocation, 0);
 
                 // REFRACTION
-                glActiveTexture(GL_TEXTURE0);
+                glActiveTexture(GL_TEXTURE1);
                 glBindTexture(GL_TEXTURE_2D , refractionTexture);
-                glUniform1i(refractionTextureLocation, 0);
+                glUniform1i(refractionTextureLocation, 1);
             }
 
             scene_objects[i]->loadBuffers();

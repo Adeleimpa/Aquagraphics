@@ -30,7 +30,7 @@ in vec3 FragPos;
 
 // reflection, refraction
 uniform sampler2D reflectionTexture;
-uniform sampler2D refractiontexture;
+uniform sampler2D refractionTexture;
 uniform int isWater;
 
 void main(){
@@ -65,12 +65,10 @@ void main(){
                 vec3 upDirection = vec3(0.0, 1.0, 0.0); // direction points to top
     
                 if (normalize(fragNormal) == upDirection) { // if normal points to top (i.e. is top face)
-                        //FragColor = texture(reflectionTexture, coord_txt) * vec4(1.0, 1.0, 1.0, 0.1); // test reflection
-                        //FragColor = texture(refractiontexture, coord_txt) * vec4(1.0, 1.0, 1.0, 0.1); // test refraction
 
                         //mix both reflection and refraction
                         vec4 reflectionColor = texture(reflectionTexture, coord_txt) * vec4(1.0, 1.0, 1.0, 0.1);
-                        vec4 refractionColor = texture(refractiontexture, coord_txt) * vec4(1.0, 1.0, 1.0, 0.1);
+                        vec4 refractionColor = texture(refractionTexture, coord_txt) * vec4(1.0, 1.0, 1.0, 0.1);
 
                         FragColor = mix(reflectionColor, refractionColor, 0.25);
 
