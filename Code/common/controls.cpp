@@ -44,6 +44,10 @@ void setHorizontalAngle(float new_angle){
     horizontalAngle = new_angle;
 }
 
+void setFoV(float new_fov){
+	initialFoV = new_fov;
+}
+
 glm::vec3 getCamPosition(){
     return position;
 }

@@ -32,6 +32,7 @@ in vec3 FragPos;
 uniform sampler2D reflectionTexture;
 uniform sampler2D refractionTexture;
 uniform int isWater;
+in vec4 clipSpace;
 
 void main(){
 
@@ -53,6 +54,11 @@ void main(){
         //vec3 result = (ambient + diffuse) * objectColor;
         vec3 result = (ambient + diffuse + specular) * objectColor;
 
+        // refraction, reflection
+        vec2 ndc = (clipSpace.xy/clipSpace.w)/2.0 + 0.5;
+        vec2 reflectionTxtCoordinates = vec2(ndc.x , -ndc.y);
+        vec2 refractionTxtCoordinates = vec2(ndc.x , ndc.y);
+
 
         if(isSkybox == 1){
                 FragColor = texture(skybox_txt, coord_txt) * vec4(objectColor, 0.0);
@@ -67,10 +73,11 @@ void main(){
                 if (normalize(fragNormal) == upDirection) { // if normal points to top (i.e. is top face)
 
                         //mix both reflection and refraction
-                        vec4 reflectionColor = texture(reflectionTexture, coord_txt) * vec4(1.0, 1.0, 1.0, 0.1);
-                        vec4 refractionColor = texture(refractionTexture, coord_txt) * vec4(1.0, 1.0, 1.0, 0.1);
+                        vec4 reflectionColor = texture(reflectionTexture, reflectionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.1);
+                        vec4 refractionColor = texture(refractionTexture, refractionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.1);
 
-                        FragColor = mix(reflectionColor, refractionColor, 0.25);
+                        //FragColor = mix(reflectionColor, refractionColor, 0.5);
+                        FragColor = refractionColor;
 
                 } else {
                         FragColor = vec4(result, transparency); // Apply object color

@@ -349,6 +349,7 @@ int main( void )
         setCamPosition(refl_cam_position);
         //setVerticalAngle(-getVerticalAngle()); // invert
         //setHorizontalAngle(-getHorizontalAngle()); // invert
+        setFoV(80.0f);
         reflection_camera->MVP(cameraRotates, speedUp, slowDown);
         reflection_camera->sendMVPtoShader(programID);
 
@@ -387,10 +388,11 @@ int main( void )
         glUseProgram(programID);
 
         // REFRACTION CAMERA
-        refr_cam_position[1] -= 2.0;
+        refr_cam_position[1] += 1.0;
         setCamPosition(refr_cam_position);
         //setVerticalAngle(-getVerticalAngle()); // invert
         //setHorizontalAngle(-getHorizontalAngle()); // invert
+        setFoV(80.0f);
         refraction_camera->MVP(cameraRotates, speedUp, slowDown);
         refraction_camera->sendMVPtoShader(programID);
 
@@ -407,7 +409,7 @@ int main( void )
                 wood_texture->sendTextureToShader(programID, "wood_txt", 0);
             }
             
-            if(scene_objects[i]->isSkybox==1 || scene_objects[i]->isPlane==1){ // do not render water nor aquarium for refraction
+            if(scene_objects[i]->isWater==0){ // render everything but water for refraction
                 scene_objects[i]->loadBuffers();
                 scene_objects[i]->draw(programID, wired);
             }
@@ -431,6 +433,7 @@ int main( void )
         setCamPosition(camera_position);
         //setVerticalAngle(-getVerticalAngle()); // invert
         //setHorizontalAngle(-getHorizontalAngle()); // invert
+        setFoV(45.0f);
         camera->MVP(cameraRotates, speedUp, slowDown);
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
@@ -536,5 +539,5 @@ void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
         }
     }
 
-
 }
+
