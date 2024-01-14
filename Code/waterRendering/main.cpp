@@ -352,11 +352,11 @@ int main( void )
 
         // REFLECTION CAMERA
         refl_cam_position = getCamPosition();
-        refl_cam_position[1] -= 1.7 * (abs(refl_cam_position[1] - (water->side_len/2.0f)));
+        refl_cam_position[1] -= 2.0 * (abs(refl_cam_position[1] - (water->side_len/2.0f)));
         setCamPosition(refl_cam_position);
-        //setVerticalAngle(-getVerticalAngle()); // invert
+        setVerticalAngle(-getVerticalAngle()); // invert
         //setHorizontalAngle(-getHorizontalAngle()); // invert
-        setFoV(80.0f);
+        //setFoV(80.0f);
         reflection_camera->MVP(cameraRotates, speedUp, slowDown);
         reflection_camera->sendMVPtoShader(programID);
 
@@ -373,9 +373,11 @@ int main( void )
                 sky_texture->sendTextureToShader(programID, "skybox_txt", 0);
             }else if(scene_objects[i]->isPlane==1){
                 wood_texture->sendTextureToShader(programID, "wood_txt", 0);
+            }else if(scene_objects[i]->isAquarium==1){
+                tile_texture->sendTextureToShader(programID, "tile_txt", 0);
             }
             
-            if(scene_objects[i]->isWater==0){ // do not render water for reflection
+            if(scene_objects[i]->isAquarium==1 or scene_objects[i]->isSkybox==1){ // render everything but water and plane for reflection
                 scene_objects[i]->loadBuffers();
                 scene_objects[i]->draw(programID, wired);
             }
@@ -416,7 +418,9 @@ int main( void )
                 sky_texture->sendTextureToShader(programID, "skybox_txt", 0);
             }else if(scene_objects[i]->isPlane==1){
                 wood_texture->sendTextureToShader(programID, "wood_txt", 0);
-            }
+            }else if(scene_objects[i]->isAquarium==1){
+                tile_texture->sendTextureToShader(programID, "tile_txt", 0);
+            }  
             
             if(scene_objects[i]->isWater==0){ // render everything but water for refraction
                 scene_objects[i]->loadBuffers();
@@ -440,8 +444,8 @@ int main( void )
 
         // CAMERA
         setCamPosition(camera_position);
-        //setVerticalAngle(-getVerticalAngle()); // invert
-        //setHorizontalAngle(-getHorizontalAngle()); // invert
+        setVerticalAngle(-getVerticalAngle()); // invert
+        //setHorizontalAngle(-getHorizontalAngle());//invert
         setFoV(45.0f);
         camera->MVP(cameraRotates, speedUp, slowDown);
         camera->sendMVPtoShader(programID);
