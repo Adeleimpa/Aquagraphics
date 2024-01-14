@@ -27,11 +27,17 @@ out vec3 FragPos;
 // clip space coordinates for refraction
 out vec4 clipSpace;
 
+uniform vec4 clipping_plane;
+
 
 void main(){
-        
+
         transformation_matrix = proj_matrix * view_matrix * model_matrix; // MVP but inverted! (order matters)
-        clipSpace = transformation_matrix * vec4(vertices_position_modelspace, 1);
+
+        gl_ClipDistance[0] = dot(vec4(vertices_position_modelspace, 1.0), clipping_plane);
+        
+        //clipSpace = transformation_matrix * vec4(vertices_position_modelspace.x, 0.0, vertices_position_modelspace.y, 1.0); // todo fix
+        clipSpace = transformation_matrix * vec4(vertices_position_modelspace, 1.0);
         gl_Position = clipSpace;
 
         FragPos = vec3(model_matrix * vec4(vertices_position_modelspace, 1.0));

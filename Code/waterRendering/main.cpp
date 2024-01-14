@@ -102,6 +102,8 @@ GLTexture *sky_texture = new GLTexture();
 GLTexture *wood_texture = new GLTexture();
 GLTexture *tile_texture = new GLTexture();
 
+glm::vec4 clipping_plane;
+
 
 // draw wired mesh or not
 bool wired = false;
@@ -201,7 +203,7 @@ int main( void )
 
     // default to orbital camera
     setCamPosition(glm::vec3( 0, 6, 5));
-    setVerticalAngle(-3.14f/3.5f);
+    setVerticalAngle(-3.14f/4.0f);
 
     // ------------------------------------------------------------------------------------
     // PLANE
@@ -325,6 +327,7 @@ int main( void )
 
     do{
         enableBlending(); // for transparency
+        glEnable(GL_CLIP_DISTANCE0);
 
         // Measure speed
         // per-frame time logic
@@ -332,10 +335,14 @@ int main( void )
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+
         // REFLECTION -----------------------------------------------------------------------------
         glBindFramebuffer(GL_FRAMEBUFFER, reflectionFBO);
         glBindTexture(GL_TEXTURE_2D, reflectionTexture);
 
+        // send clipping plane
+        clipping_plane = glm::vec4(0.0, 1.0, 0.0, -1.0); // todo replace -1 by -waterheight
+        glUniform4f(glGetUniformLocation(programID, "clipping_plane"), clipping_plane[0], clipping_plane[1], clipping_plane[2], clipping_plane[3]);
 
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -387,6 +394,10 @@ int main( void )
         glBindFramebuffer(GL_FRAMEBUFFER, refractionFBO);
         glBindTexture(GL_TEXTURE_2D, refractionTexture);
 
+        // send clipping plane
+        clipping_plane = glm::vec4(0.0, -1.0, 0.0, 1.0); // todo replace -1 by -waterheight
+        glUniform4f(glGetUniformLocation(programID, "clipping_plane"), clipping_plane[0], clipping_plane[1], clipping_plane[2], clipping_plane[3]);
+
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -433,6 +444,10 @@ int main( void )
         // switch to default buffer
         glBindFramebuffer(GL_FRAMEBUFFER,0);
 
+        // send clipping plane
+        clipping_plane = glm::vec4(0.0, 1.0, 0.0, 100.0);
+        glUniform4f(glGetUniformLocation(programID, "clipping_plane"), clipping_plane[0], clipping_plane[1], clipping_plane[2], clipping_plane[3]);
+
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -450,7 +465,6 @@ int main( void )
         camera->MVP(cameraRotates, speedUp, slowDown);
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
-
 
         // animate water
         water->animateWater(amplitude, frequency, currentFrame);
@@ -558,4 +572,3 @@ void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
     }
 
 }
-
