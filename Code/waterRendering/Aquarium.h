@@ -48,13 +48,13 @@ public:
 
     void generatePlanes(){
         // GENERATE PLANES AND BUFFERS
-        floor->generatePlane(-1.0);
+        floor->generatePlane(1.0);
         floor->generateBuffers();
-        left->generatePlane(-1.0);
+        left->generatePlane(1.0);
         left->generateBuffers();
-        right->generatePlane(1.0);
+        right->generatePlane(-1.0);
         right->generateBuffers();
-        back->generatePlane(-1.0);
+        back->generatePlane(1.0);
         back->generateBuffers();
     }
 
@@ -71,6 +71,13 @@ public:
         right->setMaterial(a, d, s, alpha);
         back->setMaterial(a, d, s, alpha);
     }
+
+    void setIsAquarium(int i){
+        floor->isAquarium = 1;
+        left->isAquarium = 1;
+        right->isAquarium = 1;
+        back->isAquarium = 1;
+    }   
 
 };
 

@@ -9,6 +9,9 @@ uniform int isSkybox;
 uniform sampler2D wood_txt;
 uniform int isPlane;
 
+uniform int isAquarium;
+uniform sampler2D tile_txt;
+
 uniform vec3 objectColor;
 uniform vec3 k_a;
 uniform vec3 k_d;
@@ -65,7 +68,9 @@ void main(){
 
         }else if (isPlane == 1){
                 FragColor = texture(wood_txt, coord_txt) * vec4(objectColor, 0.0);
-                //FragColor = texture(reflectionTexture, coord_txt) * vec4(0.9, 0.9, 0.9, 0.0); // test reflection
+
+        }else if(isAquarium == 1){
+                FragColor = texture(tile_txt, coord_txt) * vec4(objectColor, 0.0);
 
         }else if (isWater == 1){
                 vec3 upDirection = vec3(0.0, 1.0, 0.0); // direction points to top
@@ -76,8 +81,9 @@ void main(){
                         vec4 reflectionColor = texture(reflectionTexture, reflectionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.1);
                         vec4 refractionColor = texture(refractionTexture, refractionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.1);
 
-                        //FragColor = mix(reflectionColor, refractionColor, 0.5);
-                        FragColor = refractionColor;
+
+                        //vec4 mix_refr_refl = mix(reflectionColor, refractionColor, 0.5);
+                        FragColor = vec4(reflectionColor.x, reflectionColor.y, reflectionColor.z, 0.1);
 
                 } else {
                         FragColor = vec4(result, transparency); // Apply object color

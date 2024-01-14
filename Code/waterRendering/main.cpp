@@ -94,12 +94,14 @@ Skybox *skybox = new Skybox(glm::vec3(0.0,0.0,0.0), 100.0);
 WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
 
 // aquarium
-Aquarium *aquarium = new Aquarium(water->side_len, 2,  glm::vec3(0.0,0.0,0.0));
+Aquarium *aquarium = new Aquarium(water->side_len, 1,  glm::vec3(0.0,0.0,0.0));
 
 // textures
 GLTexture *texture = new GLTexture();
 GLTexture *sky_texture = new GLTexture();
 GLTexture *wood_texture = new GLTexture();
+GLTexture *tile_texture = new GLTexture();
+
 
 // draw wired mesh or not
 bool wired = false;
@@ -198,8 +200,8 @@ int main( void )
     programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
 
     // default to orbital camera
-    setCamPosition(glm::vec3( 0, 5, 5));
-    setVerticalAngle(-3.14f/4.0f);
+    setCamPosition(glm::vec3( 0, 6, 5));
+    setVerticalAngle(-3.14f/3.5f);
 
     // ------------------------------------------------------------------------------------
     // PLANE
@@ -228,7 +230,7 @@ int main( void )
     // ------------------------------------------------------------------------------------
     water->generateBuffers();
     water->setColor(glm::vec3(0.67, 0.84, 0.9));
-    water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f), 0.7);
+    water->setMaterial(glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.0f, 0.5f, 0.7f), glm::vec3(0.5f, 0.5f, 0.5f), 0.4);
     water->isWater = 1; // true
     // ------------------------------------------------------------------------------------
 
@@ -237,7 +239,8 @@ int main( void )
     // ------------------------------------------------------------------------------------
     aquarium->setAquariumColor(glm::vec3(0.94, 0.94, 0.94));
     aquarium->generatePlanes();
-    aquarium->setAquariumMaterial(glm::vec3(0.9f, 0.9f, 0.9f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.9f, 0.9f, 0.9f), 0.2);
+    aquarium->setAquariumMaterial(glm::vec3(0.9f, 0.9f, 0.9f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.9f, 0.9f, 0.9f), 0.);
+    aquarium->setIsAquarium(1); // true
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
@@ -275,6 +278,10 @@ int main( void )
     wood_texture->generateTexture();
     wood_texture->loadTexture((char*)"textures/wood.jpg");
     wood_texture->defineParameters();
+
+    tile_texture->generateTexture();
+    tile_texture->loadTexture((char*)"textures/tile.jpg");
+    tile_texture->defineParameters();
     // ------------------------------------------------------------------------------------
 
 
@@ -388,7 +395,9 @@ int main( void )
         glUseProgram(programID);
 
         // REFRACTION CAMERA
-        refr_cam_position[1] += 1.0;
+        refr_cam_position[0] += 6.0;
+        refr_cam_position[1] += 15.0;
+        refr_cam_position[2] += 6.0;
         setCamPosition(refr_cam_position);
         //setVerticalAngle(-getVerticalAngle()); // invert
         //setHorizontalAngle(-getHorizontalAngle()); // invert
@@ -438,8 +447,10 @@ int main( void )
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
 
+
         // animate water
         water->animateWater(amplitude, frequency, currentFrame);
+
 
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){
@@ -449,6 +460,8 @@ int main( void )
                 sky_texture->sendTextureToShader(programID, "skybox_txt", 0);
             }else if(scene_objects[i]->isPlane==1){
                 wood_texture->sendTextureToShader(programID, "wood_txt", 0);
+            }else if(scene_objects[i]->isAquarium==1){
+                tile_texture->sendTextureToShader(programID, "tile_txt", 0);
             }else if(scene_objects[i]->isWater==1){
 
                 // REFLECTION
@@ -465,6 +478,7 @@ int main( void )
             scene_objects[i]->loadBuffers();
             scene_objects[i]->draw(programID, wired);
         }
+
         // -----------------------------------------------------------------------------------------------------
 
 

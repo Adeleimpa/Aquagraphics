@@ -28,6 +28,7 @@ public:
     int isSkybox;
     int isPlane;
     int isWater;
+    int isAquarium;
 
     glm::vec3 color = glm::vec3(0.0, 0.0, 0.0); // default value
 
@@ -62,6 +63,7 @@ public:
         glUniform1i(glGetUniformLocation(programID, "isSkybox"), isSkybox);
         glUniform1i(glGetUniformLocation(programID, "isPlane"), isPlane);
         glUniform1i(glGetUniformLocation(programID, "isWater"), isWater);
+        glUniform1i(glGetUniformLocation(programID, "isAquarium"), isAquarium);
 
         // 1rst attribute buffer : vertices
         glEnableVertexAttribArray(0); // layout (location = 0)
