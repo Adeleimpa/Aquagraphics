@@ -12,6 +12,8 @@ uniform int isPlane;
 uniform int isAquarium;
 uniform sampler2D tile_txt;
 
+uniform sampler2D texture_nrs;
+
 uniform vec3 objectColor;
 uniform vec3 k_a;
 uniform vec3 k_d;
@@ -58,7 +60,7 @@ void main(){
         vec3 result = (ambient + diffuse + specular) * objectColor;
 
         // refraction, reflection
-        vec2 ndc = (clipSpace.xy/clipSpace.w)/2.0 + 0.5;
+        vec2 ndc = (clipSpace.xy/clipSpace.w)/2.0 + 0.5; // normalized device coords
         vec2 reflectionTxtCoordinates = vec2(ndc.x , -ndc.y);
         vec2 refractionTxtCoordinates = vec2(ndc.x , ndc.y);
 
@@ -84,6 +86,9 @@ void main(){
 
                         //vec4 mix_refr_refl = mix(reflectionColor, refractionColor, 0.5);
                         FragColor = vec4(reflectionColor.x, reflectionColor.y, reflectionColor.z, 0.1);
+
+                        //test
+                        //FragColor = texture(texture_nrs, coord_txt) * vec4(objectColor, 0.0);
 
                 } else {
                         FragColor = vec4(result, transparency); // Apply object color

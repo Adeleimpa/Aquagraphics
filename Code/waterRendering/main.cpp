@@ -480,7 +480,11 @@ int main( void )
                 wood_texture->sendTextureToShader(programID, "wood_txt", 0);
             }else if(scene_objects[i]->isAquarium==1){
                 tile_texture->sendTextureToShader(programID, "tile_txt", 0);
-            }else if(scene_objects[i]->isWater==1){
+            }
+            else if(scene_objects[i]->isWater==1){
+
+                //test
+                //texture->sendTextureToShader(programID, "texture_nrs", 0);
 
                 // REFLECTION
                 glActiveTexture(GL_TEXTURE0);
