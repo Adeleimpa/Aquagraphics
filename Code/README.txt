@@ -1,6 +1,8 @@
 How to run code ? (assuming you have everything to use OpenGL)
 
-(I run it on Ubuntu)
+I run it on Ubuntu.
+OpenGL version string: 4.0 (Compatibility profile) Mesa 22.2.5
+Cmake version 3.22.1
 
 1. Download code on your computer
 3. Open terminal window in folder 'Code' of Aquagraphics
