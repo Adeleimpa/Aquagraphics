@@ -62,7 +62,7 @@ void main(){
         // refraction, reflection
         vec2 ndc = (clipSpace.xy/clipSpace.w)/2.0 + 0.5; // normalized device coords
         vec2 reflectionTxtCoordinates = vec2(ndc.x + 0.12, -ndc.y + 0.12);
-        vec2 refractionTxtCoordinates = vec2(ndc.x , ndc.y);
+        vec2 refractionTxtCoordinates = vec2(ndc.x + 0.12, ndc.y + 0.12);
 
 
         if(isSkybox == 1){
@@ -80,12 +80,21 @@ void main(){
                 if (normalize(fragNormal) == upDirection) { // if normal points to top (i.e. is top face)
 
                         //mix both reflection and refraction
-                        vec4 reflectionColor = texture(reflectionTexture, reflectionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.1);
-                        vec4 refractionColor = texture(refractionTexture, refractionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.1);
+                        vec4 reflectionColor = texture(reflectionTexture, reflectionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.0);
+                        vec4 refractionColor = texture(refractionTexture, refractionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.0);
 
 
-                        //vec4 mix_refr_refl = mix(reflectionColor, refractionColor, 0.5);
-                        FragColor = vec4(reflectionColor.x, reflectionColor.y, reflectionColor.z, 0.1);
+                        vec4 mix_refr_refl = mix(reflectionColor, refractionColor, 0.5);
+                        //FragColor = vec4(reflectionColor.x, reflectionColor.y, reflectionColor.z, 0.1);
+                        //FragColor = vec4(refractionColor.x, refractionColor.y, refractionColor.z, 0.1);
+                        //FragColor = mix_refr_refl;
+
+                        float refractivefactor = dot(viewDir,vec3(0.0,1.0,0.0));
+                        refractivefactor = pow(refractivefactor,0.25);
+                        FragColor = mix(reflectionColor,refractionColor,refractivefactor);
+                        FragColor = mix(FragColor,vec4(objectColor, 0.0),0.2);
+                        vec3 result_water = (ambient + diffuse + specular) * vec3(FragColor.x, FragColor.y, FragColor.z);
+                        FragColor = vec4(result_water, 0.0);
 
                         //test
                         //FragColor = texture(texture_nrs, coord_txt) * vec4(objectColor, 0.0);

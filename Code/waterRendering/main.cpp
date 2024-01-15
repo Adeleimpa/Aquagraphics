@@ -363,7 +363,6 @@ int main( void )
         setCamPosition(refl_cam_position);
         setVerticalAngle(-getVerticalAngle()); // invert
         //setHorizontalAngle(-getHorizontalAngle()); // invert
-        //setFoV(80.0f);
         reflection_camera->MVP(cameraRotates, speedUp, slowDown);
         reflection_camera->sendMVPtoShader(programID);
 
@@ -408,13 +407,9 @@ int main( void )
         glUseProgram(programID);
 
         // REFRACTION CAMERA
-        refr_cam_position[0] += 6.0;
-        refr_cam_position[1] += 15.0;
-        refr_cam_position[2] += 6.0;
         setCamPosition(refr_cam_position);
-        //setVerticalAngle(-getVerticalAngle()); // invert
+        setVerticalAngle(-getVerticalAngle()); // invert
         //setHorizontalAngle(-getHorizontalAngle()); // invert
-        setFoV(80.0f);
         refraction_camera->MVP(cameraRotates, speedUp, slowDown);
         refraction_camera->sendMVPtoShader(programID);
 
@@ -433,7 +428,7 @@ int main( void )
                 tile_texture->sendTextureToShader(programID, "tile_txt", 0);
             }  
             
-            if(scene_objects[i]->isWater==0){ // render everything but water for refraction
+            if(scene_objects[i]->isAquarium==1){ // render everything but water for refraction
                 scene_objects[i]->loadBuffers();
                 scene_objects[i]->draw(programID, wired);
             }
@@ -459,9 +454,8 @@ int main( void )
 
         // CAMERA
         setCamPosition(camera_position);
-        setVerticalAngle(-getVerticalAngle()); // invert
+        //setVerticalAngle(-getVerticalAngle()); // invert
         //setHorizontalAngle(-getHorizontalAngle());//invert
-        setFoV(45.0f);
         camera->MVP(cameraRotates, speedUp, slowDown);
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
