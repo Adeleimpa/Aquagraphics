@@ -17,12 +17,6 @@ public:
     // default resolution
     unsigned int resolution = 30;
 
-    std::vector<std::vector<unsigned short> > indices_Res= std::vector<std::vector<unsigned short> >(3);
-    std::vector<std::vector<std::vector<unsigned short> > > triangles_Res =  std::vector<std::vector<std::vector<unsigned short> > >(3);
-    std::vector<std::vector<glm::vec3> > indexed_vertices_Res = std::vector<std::vector<glm::vec3> >(3);
-    std::vector<std::vector<glm::vec2> > coord_texture_Res = std::vector<std::vector<glm::vec2> >(3);
-    std::vector<std::vector<glm::vec3> > normals_Res = std::vector<std::vector<glm::vec3> >(3);
-
     Sphere() : MeshObject() {}
 
     Sphere(glm::vec3 c, float r) : MeshObject(), m_center(c), m_radius(r) {}
@@ -37,6 +31,7 @@ public:
         indexed_vertices.resize(resolution * resolution);
         normals.resize(resolution * resolution);
         coord_texture.resize(resolution * resolution);
+
         for (unsigned int thetaIt = 0; thetaIt < resolution; ++thetaIt) {
             float u = (float) (thetaIt) / (float) (resolution - 1);
             float theta = u * 2 * M_PI;

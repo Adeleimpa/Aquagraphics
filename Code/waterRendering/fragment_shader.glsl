@@ -4,8 +4,10 @@
 out vec4 FragColor;
 
 in vec2 coord_txt;
+
 uniform sampler2D skybox_txt;
 uniform int isSkybox;
+
 uniform sampler2D wood_txt;
 uniform int isPlane;
 
@@ -13,6 +15,8 @@ uniform int isAquarium;
 uniform sampler2D tile_txt;
 
 uniform sampler2D texture_nrs;
+
+uniform int isSphere;
 
 uniform vec3 objectColor;
 uniform vec3 k_a;
@@ -83,24 +87,17 @@ void main(){
                         vec4 reflectionColor = texture(reflectionTexture, reflectionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.0);
                         vec4 refractionColor = texture(refractionTexture, refractionTxtCoordinates) * vec4(1.0, 1.0, 1.0, 0.0);
 
-
-                        vec4 mix_refr_refl = mix(reflectionColor, refractionColor, 0.5);
-                        //FragColor = vec4(reflectionColor.x, reflectionColor.y, reflectionColor.z, 0.1);
-                        //FragColor = vec4(refractionColor.x, refractionColor.y, refractionColor.z, 0.1);
-                        //FragColor = mix_refr_refl;
-
-                        float refractivefactor = dot(viewDir,vec3(0.0,1.0,0.0));
-                        refractivefactor = pow(refractivefactor,0.25);
-                        FragColor = mix(reflectionColor,refractionColor,refractivefactor);
-                        FragColor = mix(FragColor,vec4(objectColor, 0.0),0.2);
-                        vec3 result_water = (ambient + diffuse + specular) * vec3(FragColor.x, FragColor.y, FragColor.z);
-                        FragColor = vec4(result_water, 0.0);
+                        vec4 mix_refr_refl = mix(reflectionColor, refractionColor, 0.3);
+                        FragColor = mix_refr_refl * vec4(objectColor, 0.0);
 
                         //test
+                        //FragColor = vec4(reflectionColor.x, reflectionColor.y, reflectionColor.z, 0.1);
+                        //FragColor = vec4(refractionColor.x, refractionColor.y, refractionColor.z, 0.1);
                         //FragColor = texture(texture_nrs, coord_txt) * vec4(objectColor, 0.0);
 
                 } else {
                         FragColor = vec4(result, transparency); // Apply object color
+                        //FragColor = vec4(objectColor, transparency); // simple color
                 }
 
         }else{

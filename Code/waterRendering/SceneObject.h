@@ -29,6 +29,7 @@ public:
     int isPlane;
     int isWater;
     int isAquarium;
+    int isSphere;
 
     glm::vec3 color = glm::vec3(0.0, 0.0, 0.0); // default value
 
@@ -64,6 +65,7 @@ public:
         glUniform1i(glGetUniformLocation(programID, "isPlane"), isPlane);
         glUniform1i(glGetUniformLocation(programID, "isWater"), isWater);
         glUniform1i(glGetUniformLocation(programID, "isAquarium"), isAquarium);
+        glUniform1i(glGetUniformLocation(programID, "isSphere"), isSphere);
 
         // 1rst attribute buffer : vertices
         glEnableVertexAttribArray(0); // layout (location = 0)
@@ -97,7 +99,7 @@ public:
             2,        // size
             GL_FLOAT, // type
             GL_FALSE, // normalized?
-            sizeof(GLfloat)*2,        // stride // TODO 0 ou sizeof(GLfloat)*2
+            sizeof(GLfloat)*2,        // stride
             (void *)0 // array buffer offset
         );
 

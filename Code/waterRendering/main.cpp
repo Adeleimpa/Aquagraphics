@@ -36,6 +36,7 @@ using namespace glm;
 #include "Aquarium.h"
 #include "Light.h"
 #include "Skybox.h"
+#include "Sphere.h"
 
 GLFWwindow* window;
 
@@ -95,6 +96,9 @@ WaterCube *water = new WaterCube(glm::vec3(0.0,0.0,0.0), 2.0);
 
 // aquarium
 Aquarium *aquarium = new Aquarium(water->side_len, 1,  glm::vec3(0.0,0.0,0.0));
+
+// sphere inside aquarium
+Sphere *sphere = new Sphere(glm::vec3(0.0,-0.65,-0.3), 0.35);
 
 // textures
 GLTexture *texture = new GLTexture();
@@ -246,6 +250,16 @@ int main( void )
     // ------------------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------------------
+    // SPHERE
+    // ------------------------------------------------------------------------------------
+    sphere->build_arrays();
+    sphere->generateBuffers();
+    sphere->setColor(glm::vec3(1.0, 0.0, 0.0));
+    sphere->setMaterial(glm::vec3(0.2f, 0.1f, 0.0f), glm::vec3(0.6f, 0.3f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f), 0.);
+    sphere->isSphere = 1; // true
+    // ------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------
     // Add objects to scene_objects
     // Attention order matters for transparency
     scene_objects.push_back(skybox->top);
@@ -261,6 +275,8 @@ int main( void )
     scene_objects.push_back(aquarium->left);
     scene_objects.push_back(aquarium->right);
     scene_objects.push_back(aquarium->back);
+
+    scene_objects.push_back(sphere);
 
     scene_objects.push_back(water);
     // ------------------------------------------------------------------------------------
@@ -290,7 +306,6 @@ int main( void )
     // For speed computation
     double lastTime = glfwGetTime();
     int nbFrames = 0;
-    double counter_flying = 0.0;
 
 
     // REFLECTION
@@ -362,7 +377,6 @@ int main( void )
         refl_cam_position[1] -= 2.0 * (abs(refl_cam_position[1] - (water->side_len/2.0f)));
         setCamPosition(refl_cam_position);
         setVerticalAngle(-getVerticalAngle()); // invert
-        //setHorizontalAngle(-getHorizontalAngle()); // invert
         reflection_camera->MVP(cameraRotates, speedUp, slowDown);
         reflection_camera->sendMVPtoShader(programID);
 
@@ -383,7 +397,7 @@ int main( void )
                 tile_texture->sendTextureToShader(programID, "tile_txt", 0);
             }
             
-            if(scene_objects[i]->isAquarium==1 or scene_objects[i]->isSkybox==1){ // render everything but water and plane for reflection
+            if(scene_objects[i]->isAquarium==1 or scene_objects[i]->isSkybox==1 or scene_objects[i]->isSphere==1){ // render everything but water and plane for reflection
                 scene_objects[i]->loadBuffers();
                 scene_objects[i]->draw(programID, wired);
             }
@@ -409,7 +423,6 @@ int main( void )
         // REFRACTION CAMERA
         setCamPosition(refr_cam_position);
         setVerticalAngle(-getVerticalAngle()); // invert
-        //setHorizontalAngle(-getHorizontalAngle()); // invert
         refraction_camera->MVP(cameraRotates, speedUp, slowDown);
         refraction_camera->sendMVPtoShader(programID);
 
@@ -428,7 +441,7 @@ int main( void )
                 tile_texture->sendTextureToShader(programID, "tile_txt", 0);
             }  
             
-            if(scene_objects[i]->isAquarium==1){ // render everything but water for refraction
+            if(scene_objects[i]->isAquarium==1 or scene_objects[i]->isSphere==1){ // render aquarium and sphere for refraction
                 scene_objects[i]->loadBuffers();
                 scene_objects[i]->draw(programID, wired);
             }
@@ -454,14 +467,13 @@ int main( void )
 
         // CAMERA
         setCamPosition(camera_position);
-        //setVerticalAngle(-getVerticalAngle()); // invert
-        //setHorizontalAngle(-getHorizontalAngle());//invert
         camera->MVP(cameraRotates, speedUp, slowDown);
         camera->sendMVPtoShader(programID);
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
 
         // animate water
         water->animateWater(amplitude, frequency, currentFrame);
+        water->dropDroplet(amplitude, glm::vec2(0.0,0.0), 0.2);
 
 
         // Draw the triangles !

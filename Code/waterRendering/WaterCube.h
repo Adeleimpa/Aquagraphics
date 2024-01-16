@@ -30,6 +30,21 @@ public:
         }
     }
 
+    void dropDroplet(float amplitude, glm::vec2 dropPosition, float dropRadius) {
+
+        for (unsigned int vertexIndex = 0; vertexIndex <= 960; ++vertexIndex) { // top face vertices
+
+            glm::vec2 vertexPosition(indexed_vertices[vertexIndex][0], indexed_vertices[vertexIndex][2]); // x, z coord
+            float distanceToDrop = glm::length(vertexPosition - dropPosition);
+
+            if (distanceToDrop < dropRadius) {
+                // Si le vertex est à l'intérieur du rayon de la goutte, ajoutez un effet d'onde
+                float dropEffect = amplitude * 0.5f * (1.0f + cos(distanceToDrop / dropRadius * glm::pi<float>()));
+                indexed_vertices[vertexIndex][1] += dropEffect;
+            }
+        }
+    }
+
     float getWaterHeight(){
         return side_len/2.0f;
     }
