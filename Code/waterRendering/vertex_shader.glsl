@@ -29,6 +29,9 @@ out vec4 clipSpace;
 
 uniform vec4 clipping_plane;
 
+// send height of water to fragment shader
+out float height_water;
+
 
 void main(){
 
@@ -45,6 +48,8 @@ void main(){
         fragNormal = vertexNormal;
 
         coord_txt = coord; // texture
+
+        height_water = vertices_position_modelspace.y;
 
 }
 

@@ -112,6 +112,10 @@ glm::vec4 clipping_plane;
 // draw wired mesh or not
 bool wired = false;
 
+// true to drop a droplet
+bool droplet = false;
+float start_drop;
+
 
 GLuint programID;
 /*******************************************************************************/
@@ -338,7 +342,10 @@ int main( void )
     //---
     GLint refractionTextureLocation = glGetUniformLocation(programID, "refractionTexture");
 
-
+    // for wave animation
+    float drop_amplitude = 0.4;
+    float wave_length = 30.0;
+    float frequency = 1.8f;  // constant frequency
 
     do{
         enableBlending(); // for transparency
@@ -349,6 +356,9 @@ int main( void )
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        // amplitude for wave animation
+        float amplitude = 0.09f * sin(glfwGetTime());  // amplitude changes over time
 
 
         // REFLECTION -----------------------------------------------------------------------------
@@ -379,11 +389,6 @@ int main( void )
         setVerticalAngle(-getVerticalAngle()); // invert
         reflection_camera->MVP(cameraRotates, speedUp, slowDown);
         reflection_camera->sendMVPtoShader(programID);
-
-        // animate water
-        float amplitude = 0.12f * sin(glfwGetTime());  // Example: amplitude changes over time
-        float frequency = 1.8f;  // Example: constant frequency
-        water->animateWater(amplitude, frequency, currentFrame);
 
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){
@@ -425,9 +430,6 @@ int main( void )
         setVerticalAngle(-getVerticalAngle()); // invert
         refraction_camera->MVP(cameraRotates, speedUp, slowDown);
         refraction_camera->sendMVPtoShader(programID);
-
-        // animate water
-        water->animateWater(amplitude, frequency, currentFrame);
 
         // Draw the triangles !
         for(int i = 0; i < scene_objects.size(); i++){
@@ -472,8 +474,8 @@ int main( void )
         glUniform3f(glGetUniformLocation(programID, "viewPos"), camera_position[0], camera_position[1], camera_position[2]);
 
         // animate water
-        water->animateWater(amplitude, frequency, currentFrame);
-        water->dropDroplet(amplitude, glm::vec2(0.0,0.0), 0.2);
+        water->animateWater(amplitude, frequency, currentFrame, droplet, drop_amplitude, wave_length, glm::vec2(0.0,0.0), glfwGetTime()-start_drop);
+        if(droplet == true and glfwGetTime()-start_drop > 5.0){droplet=false;}
 
 
         // Draw the triangles !
@@ -539,9 +541,9 @@ int main( void )
 
 void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
 
-    /*if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-        std::cout << "Key pressed: " << key << std::endl;
-    }*/
+    if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+        //std::cout << "Key pressed: " << key << std::endl;
+    }
 
 
     if( key == GLFW_KEY_C and action == GLFW_PRESS ){
@@ -578,6 +580,18 @@ void key (GLFWwindow *window, int key, int scancode, int action, int mods ) {
         }else{
             wired = true;
             std::cout << "You have pressed the key W : wire mode activated" << std::endl;
+        }
+    }
+
+    else if( key == GLFW_KEY_SPACE and action == GLFW_PRESS ){ // W on macbook keyboard
+
+        if(droplet){
+            droplet = false;
+            std::cout << "Droplet stops falling" << std::endl;
+        }else{
+            droplet = true;
+            start_drop = glfwGetTime();
+            std::cout << "Droplet starts falling" << std::endl;
         }
     }
 

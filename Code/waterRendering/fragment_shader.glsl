@@ -43,6 +43,9 @@ uniform sampler2D refractionTexture;
 uniform int isWater;
 in vec4 clipSpace;
 
+// receive height of water from vertex shader
+in float height_water;
+
 void main(){
 
         // light calculations
@@ -89,6 +92,7 @@ void main(){
 
                         vec4 mix_refr_refl = mix(reflectionColor, refractionColor, 0.3);
                         FragColor = mix_refr_refl * vec4(objectColor, 0.0);
+                        FragColor = height_water * FragColor;
 
                         //test
                         //FragColor = vec4(reflectionColor.x, reflectionColor.y, reflectionColor.z, 0.1);

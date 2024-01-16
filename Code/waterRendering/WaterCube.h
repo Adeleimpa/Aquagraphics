@@ -21,29 +21,25 @@ public:
         return amplitude * sin(frequency * x + phaseShift);
     }
      
-    void animateWater(float amplitude, float frequency, float time) {
+
+    void animateWater(float amplitude, float frequency, float time, bool droplet, float amplitude_droplet, float wave_length, glm::vec2 dropPosition, float time_droplet) {
 
         for (unsigned int vertexIndex = 0; vertexIndex <= 960; ++vertexIndex) { // top face vertices
 
             float animatedHeight = calculateHeight(indexed_vertices[vertexIndex][0], amplitude, frequency, time);
-            indexed_vertices[vertexIndex][1] = animatedHeight + side_len/2.0f; // edit y coord
+
+            if(droplet){
+                glm::vec2 vertex_pos = glm::vec2(indexed_vertices[vertexIndex][0], indexed_vertices[vertexIndex][2]); // x and z coord
+                float distanceToDrop = glm::length(vertex_pos - dropPosition);
+
+                indexed_vertices[vertexIndex][1] = animatedHeight + side_len/2.0f + (amplitude_droplet * exp(- 0.5 * time_droplet) * cos(wave_length * distanceToDrop + (-frequency)*time_droplet)) * exp(- 3.0 * distanceToDrop);
+
+            }else{
+                indexed_vertices[vertexIndex][1] = animatedHeight + side_len/2.0f; // edit y coord
+            }    
         }
     }
 
-    void dropDroplet(float amplitude, glm::vec2 dropPosition, float dropRadius) {
-
-        for (unsigned int vertexIndex = 0; vertexIndex <= 960; ++vertexIndex) { // top face vertices
-
-            glm::vec2 vertexPosition(indexed_vertices[vertexIndex][0], indexed_vertices[vertexIndex][2]); // x, z coord
-            float distanceToDrop = glm::length(vertexPosition - dropPosition);
-
-            if (distanceToDrop < dropRadius) {
-                // Si le vertex est à l'intérieur du rayon de la goutte, ajoutez un effet d'onde
-                float dropEffect = amplitude * 0.5f * (1.0f + cos(distanceToDrop / dropRadius * glm::pi<float>()));
-                indexed_vertices[vertexIndex][1] += dropEffect;
-            }
-        }
-    }
 
     float getWaterHeight(){
         return side_len/2.0f;
