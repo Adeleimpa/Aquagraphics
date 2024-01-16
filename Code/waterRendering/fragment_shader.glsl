@@ -98,6 +98,7 @@ void main(){
                         //FragColor = vec4(reflectionColor.x, reflectionColor.y, reflectionColor.z, 0.1);
                         //FragColor = vec4(refractionColor.x, refractionColor.y, refractionColor.z, 0.1);
                         //FragColor = texture(texture_nrs, coord_txt) * vec4(objectColor, 0.0);
+                        //FragColor = vec4(result, transparency); // Apply object color
 
                 } else {
                         FragColor = vec4(result, transparency); // Apply object color

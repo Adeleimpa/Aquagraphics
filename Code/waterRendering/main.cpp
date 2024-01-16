@@ -59,8 +59,6 @@ bool slowDown = false;
 // reflection camera
 Camera *reflection_camera = new Camera();
 glm::vec3 refl_cam_position = glm::vec3(camera_position[0], camera_position[1], camera_position[2]);
-//float refl_cam_vertical_angle = 3.14f/4.0f;
-//float refl_cam_horizontal_angle;
 
 // refraction camera
 Camera *refraction_camera = new Camera();
