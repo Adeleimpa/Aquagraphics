@@ -16,3 +16,9 @@ Once you've done that you can you compile and run like that:
 9. cmake —build build
 10. cd waterRendering
 11. ./waterRendering
+
+
+Commands in the app:
+- Press c to move the camera around the scene
+- Press space bar to make a droplet fall onto the surface
+- Use the arrows to move in the scene
