@@ -39,7 +39,6 @@ void main(){
 
         gl_ClipDistance[0] = dot(vec4(vertices_position_modelspace, 1.0), clipping_plane);
         
-        //clipSpace = transformation_matrix * vec4(vertices_position_modelspace.x, 0.0, vertices_position_modelspace.y, 1.0); // todo fix
         clipSpace = transformation_matrix * vec4(vertices_position_modelspace, 1.0);
         gl_Position = clipSpace;
 
