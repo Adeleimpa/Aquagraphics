@@ -22,3 +22,4 @@ Commands in the app:
 - Press c to move the camera around the scene
 - Press space bar to make a droplet fall onto the surface
 - Use the arrows to move in the scene
+- Press W to visualize the wires of the mesh
