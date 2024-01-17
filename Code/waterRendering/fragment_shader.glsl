@@ -68,6 +68,7 @@ void main(){
 
         // refraction, reflection
         vec2 ndc = (clipSpace.xy/clipSpace.w)/2.0 + 0.5; // normalized device coords
+        // todo shouldnt be + 0.12 below
         vec2 reflectionTxtCoordinates = vec2(ndc.x + 0.12, -ndc.y + 0.12);
         vec2 refractionTxtCoordinates = vec2(ndc.x + 0.12, ndc.y + 0.12);
 
